@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %} Proyecto Hombre {% endblock %}</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Favicon icon -->
+        <link
+        rel="icon"
+        type="image/png"
+        sizes="323x32"
+        href="{{ asset('img/favicon.png') }}"
+        />
+        <meta name="robots" content="noindex,nofollow" />
+        
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+{% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
