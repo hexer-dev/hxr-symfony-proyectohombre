@@ -1,0 +1,59 @@
+{% extends 'app.html.twig' %}
+
+{% block title %} Bienvenido/a{% endblock %}
+
+{% block content %}
+    <div class="row page-titles">
+        <div class="col-md-12 col-12 align-self-center">
+            <h3 class="text-themecolor mb-0">Bienvenido/a</h3>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">          
+            <div class="col-lg-6 d-flex align-items-stretch">               
+                <div class="card bg-primary w-100">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="me-3 align-self-center">
+                                <h1 class="text-white"><i class="mdi mdi-clipboard"></i></h1>
+                            </div>
+                            <div>
+                                <h3 class="card-title text-white">Programas activos</h3>
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-4 col-xl-7 align-self-center">
+                                <h2 class="fw-light text-white text-nowrap">5</h2>
+                            </div>
+                            <div class="col-8 col-xl-5 pb-3 pt-2 align-self-center">
+                                <div id="bandwidth-usage"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+            </div>
+            <div class="col-lg-6 d-flex align-items-stretch">               
+                <div class="card bg-secondary w-100">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="me-3 align-self-center">
+                                <h1 class="text-white"><i class="mdi mdi-clipboard"></i></h1>
+                            </div>
+                            <div>
+                                <h3 class="card-title text-white">Programas finalizados</h3>
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-4 col-xl-7 align-self-center">
+                                <h2 class="fw-light text-white text-nowrap">5</h2>
+                            </div>
+                            <div class="col-8 col-xl-5 pb-3 pt-2 align-self-center">
+                                <div id="bandwidth-usage"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
