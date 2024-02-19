@@ -1,11 +1,11 @@
 {% extends 'app.html.twig' %}
 
-{% block title %}Profesionales{% endblock %}
+{% block title %}Sedes{% endblock %}
 
 {% block content %}
  <div class="row page-titles">
     <div class="col-md-7 col-12 align-self-center">
-        <h3 class="text-themecolor mb-0">Profesionales</h3>
+        <h3 class="text-themecolor mb-0">Sedes</h3>
     </div>
     <div class="col-md-5 col-12 align-self-center">
         <div class="d-flex mt-2 justify-content-end">
@@ -28,29 +28,21 @@
             <thead class="table-light">
                 <tr>
                     <th class="border-bottom border-top">Nombre</th>
-                    <th class="border-bottom border-top">Apellidos</th>
-                    <th class="border-bottom border-top">Email</th>
-                    <th class="border-bottom border-top">Rol</th>
+                    <th class="border-bottom border-top">Teléfono</th>
                     <th class="border-bottom border-top">Actions</th>
                 </tr>
             </thead>
             <tbody>
-            {% if usuarios is defined %}
-              {% for user in usuarios %}
+            {% if headquarters is defined %}
+              {% for headquarter in headquarters %}
                 <tr>
                     <td>
                         <div class="d-flex align-items-center">
                             <span class="ms-3 fw-normal">{{ user.name}}</span>
                         </div>
                     </td>
-                    <td>{{ user.lastname}}</td>
                     <td>
-                        <div class="d-flex align-items-center">                                                
-                          {{ user.email }}
-                        </div>
-                    </td>
-                    <td>
-                        {{ user.roles[0]}}
+                        {{ (null != headquarter.phone) ? headquarter.phone : '---' }}
                     </td>
                     <td>
                       <div class="dropdown dropstart">
@@ -67,7 +59,7 @@
                 {% endfor %}
               {% else %}
                   <tr>
-                    <td colspan="5">No existen usuarios en la aplicación</td>
+                    <td colspan="5">No existen sedes en la aplicación</td>
                   </tr>
               {% endif %}
             </tbody>

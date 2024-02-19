@@ -19,6 +19,14 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+            logout:
+                path: app_logout
+                # the available options are 'cache', 'cookies', 'storage', 'executionContexts'
+                # you can also use the '*' wildcard to clear all data
+                clear_site_data:
+                    - cache
+                    - storage
+                    - executionContexts
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -35,7 +43,7 @@ security:
 
     role_hierarchy:
         ROLE_CONSULTANT: ROLE_USER_CONSULTANT
-        ROLE_HEADQUARTER: ROLE_USER_HEADQUARTER
+        ROLE_MANAGER: ROLE_USER_MANAGER
         ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 

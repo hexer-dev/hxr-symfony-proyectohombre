@@ -19,7 +19,7 @@ class UserType extends AbstractType
     {
         $roles = [
             'Administrador' => 'ROLE_ADMIN',
-            'Profesional' => 'ROLE_HEADQUARTER',
+            'Gestores' => 'ROLE_MANAGER',
             'Consultor' => 'ROLE_CONSULTANT',
         ];
 
