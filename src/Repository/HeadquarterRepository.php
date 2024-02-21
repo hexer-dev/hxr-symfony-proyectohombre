@@ -21,6 +21,17 @@ class HeadquarterRepository extends ServiceEntityRepository
         parent::__construct($registry, Headquarter::class);
     }
 
+    public function add(Headquarter $headquarter)
+    {
+        $this->getEntityManager()->persist($headquarter);
+        $this->getEntityManager()->flush();
+    }
+
+    public function remove(Headquarter $headquarter){
+        $this->getEntityManager()->remove($headquarter);
+        $this->getEntityManager()->flush();
+    }
+
 //    /**
 //     * @return Headquarter[] Returns an array of Headquarter objects
 //     */

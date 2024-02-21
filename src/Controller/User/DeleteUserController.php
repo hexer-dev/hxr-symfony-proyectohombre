@@ -16,8 +16,7 @@ class DeleteUserController extends AbstractController
         User $user,
         UserRepository $repository,
         Request $request
-    ): Response
-    {
+    ): Response {
         $repository->remove($user);
 
         $this->addFlash('sucess', sprintf('Profesional eliminado'));

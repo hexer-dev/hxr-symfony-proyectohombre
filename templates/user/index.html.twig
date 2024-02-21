@@ -23,55 +23,57 @@
  </div>
 
  <div class="container-fluid">
-    <div class="table-responsive">
-        <table class="table customize-table mb-0 v-middle">
-            <thead class="table-light">
-                <tr>
-                    <th class="border-bottom border-top">Nombre</th>
-                    <th class="border-bottom border-top">Apellidos</th>
-                    <th class="border-bottom border-top">Email</th>
-                    <th class="border-bottom border-top">Rol</th>
-                    <th class="border-bottom border-top">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% if usuarios is defined %}
-              {% for user in usuarios %}
-                <tr>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <span class="ms-3 fw-normal">{{ user.name}}</span>
-                        </div>
-                    </td>
-                    <td>{{ user.lastname}}</td>
-                    <td>
-                        <div class="d-flex align-items-center">                                                
-                          {{ user.email }}
-                        </div>
-                    </td>
-                    <td>
-                        {{ user.roles[0]}}
-                    </td>
-                    <td>
-                      <div class="dropdown dropstart">
-                        <a href="#" class="link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i data-feather="more-horizontal" class="feather-sm"></i>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <li><a class="dropdown-item" href="{{ path('app_user_edit',{'id': user.id}) }}">Editar</a></li>
-                          <li><a class="dropdown-item" href="{{ path('app_user_remove',{'id': user.id}) }}">Delete</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                </tr>
-                {% endfor %}
-              {% else %}
+    <div class="card">
+        <div class="table-responsive">
+          <table class="table customize-table mb-0 v-middle">
+              <thead class="table-light">
                   <tr>
-                    <td colspan="5">No existen usuarios en la aplicación</td>
+                      <th class="border-bottom border-top">Nombre</th>
+                      <th class="border-bottom border-top">Apellidos</th>
+                      <th class="border-bottom border-top">Email</th>
+                      <th class="border-bottom border-top">Rol</th>
+                      <th class="border-bottom border-top">Actions</th>
                   </tr>
-              {% endif %}
-            </tbody>
-        </table>
-    </div>
+              </thead>
+              <tbody>
+              {% if usuarios is defined and usuarios|length > 0%}
+                {% for user in usuarios %}
+                  <tr>
+                      <td>
+                          <div class="d-flex align-items-center">
+                              <span class="ms-3 fw-normal">{{ user.name}}</span>
+                          </div>
+                      </td>
+                      <td>{{ user.lastname}}</td>
+                      <td>
+                          <div class="d-flex align-items-center">                                                
+                            {{ user.email }}
+                          </div>
+                      </td>
+                      <td>
+                          {{ user.roles[0]}}
+                      </td>
+                      <td>
+                        <div class="dropdown dropstart">
+                          <a href="#" class="link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i data-feather="more-horizontal" class="feather-sm"></i>
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="{{ path('app_user_edit',{'id': user.id}) }}">Editar</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_user_remove',{'id': user.id}) }}">Eliminar</a></li>
+                          </ul>
+                        </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                    <tr>
+                      <td colspan="5">No existen usuarios en la aplicación</td>
+                    </tr>
+                {% endif %}
+              </tbody>
+          </table>
+     </div>
+   </div>
 </div>
 {% endblock %}

@@ -15,6 +15,7 @@ class HeadquarterVoter extends Voter
     public const VIEW = 'view';
     public const LIST = 'list';
     public const ADD = 'add';
+    public const DELETE = 'delete';
 
     private $security;
 
@@ -29,7 +30,7 @@ class HeadquarterVoter extends Voter
             return false;
         }
 
-        if (!in_array($attribute, [self::EDIT, self::VIEW, self::LIST, self::ADD])) {
+        if (!in_array($attribute, [self::EDIT, self::VIEW, self::LIST, self::ADD, self::DELETE])) {
             return false;
         }
 
@@ -60,13 +61,17 @@ class HeadquarterVoter extends Voter
             return $this->canAdd($subject, $currentUser);
         }
 
+        if ($attribute === self::DELETE) {
+            return $this->canDelete($subject, $currentUser);
+        }
+
         return false;
     }
 
-    private function canView(mixed $subject, User $currentUser)     
+    private function canView(mixed $subject, User $currentUser)
     {
         if (
-            $this->security->isGranted('ROLE_SUPER_ADMIN') 
+            $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_ADMIN')
         ) {
             return true;
@@ -75,10 +80,10 @@ class HeadquarterVoter extends Voter
         return false;
     }
 
-    private function canEdit(mixed $subject, User $currentUser)     
+    private function canEdit(mixed $subject, User $currentUser)
     {
         if (
-            $this->security->isGranted('ROLE_SUPER_ADMIN') 
+            $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_ADMIN')
         ) {
             return true;
@@ -87,10 +92,10 @@ class HeadquarterVoter extends Voter
         return false;
     }
 
-    private function canList(mixed $subject, User $currentUser)     
+    private function canList(mixed $subject, User $currentUser)
     {
         if (
-            $this->security->isGranted('ROLE_SUPER_ADMIN') 
+            $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_ADMIN')
         ) {
             return true;
@@ -99,10 +104,22 @@ class HeadquarterVoter extends Voter
         return false;
     }
 
-    private function canAdd(mixed $subject, User $currentUser)     
+    private function canAdd(mixed $subject, User $currentUser)
     {
         if (
-            $this->security->isGranted('ROLE_SUPER_ADMIN') 
+            $this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_ADMIN')
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function canDelete(mixed $subject, User $currentUser)
+    {
+        if (
+            $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_ADMIN')
         ) {
             return true;

@@ -16,8 +16,7 @@ class ListHeadquarterController extends AbstractController
     public function list(
         HeadquarterRepository $repository,
         Request $request
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted(HeadquarterVoter::LIST, new Headquarter);
 
         $headquarters = $repository->findAll();

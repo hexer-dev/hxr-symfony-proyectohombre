@@ -19,26 +19,25 @@ class EditUserController extends AbstractController
         UserPasswordHasherInterface $hasherPassword,
         UserRepository $repository,
         Request $request
-    ): Response
-    {
+    ): Response {
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-         
+
             if (null !== $user->getPassword() && !empty($user->getPassword())) {
                 $passwordHashed = $hasherPassword->hashPassword(
                     $user,
                     $user->getPassword()
                 );
-    
+
                 $user->setPassword($passwordHashed);
-            }            
+            }
 
             $repository->add($user);
-        
+
             $this->addFlash('sucess', sprintf('Profesional Actualizado'));
 
             return $this->redirectToRoute('app_user_list');

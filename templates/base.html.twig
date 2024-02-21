@@ -19,6 +19,8 @@
         {% block stylesheets %}
             <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet" />
             <link href="{{ asset('dist/css/custom.min.css') }}" rel="stylesheet" />
+            <link href="{{ asset('dist/libs/select2/dist/css/select2.min.css') }}" rel="stylesheet" >
+            <link href="{{ asset('dist/libs/prismjs/themes/prism-okaidia.min.css') }}" rel="stylesheet" >
         {% endblock %}
 
         {% block javascripts %}
@@ -46,10 +48,10 @@
             <!--Custom JavaScript -->
             <script src="{{ asset('dist/js/feather.min.js') }}"></script>
             <script src="{{ asset('dist/js/custom.min.js') }}"></script>
-            <!--This page JavaScript -->
-            <!--script src="{{ asset('dist/libs/quill/dist/quill.min.js') }}"></script-->
-            <!-- Initialize Quill editor -->
-            <!--script src="{{ asset('dist/js/pages/todo/todo.js') }}"></script-->
+            <!-- select -->
+            <script src="{{ asset('dist/libs/select2/dist/js/select2.full.min.js') }}"></script>
+            <!-- tables -->            
+            <script src="{{ asset('dist/libs/prismjs/prism.js') }}"></script>            
         {% endblock %}
     </body>
 </html>

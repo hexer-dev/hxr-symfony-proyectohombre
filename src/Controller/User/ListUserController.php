@@ -12,13 +12,13 @@ class ListUserController extends AbstractController
 {
     #[Route('/user', name: 'app_user_list')]
     public function list(
-        UserRepository $repository, 
-        Request $request): Response
-    {
+        UserRepository $repository,
+        Request $request
+    ): Response {
         $usuarios = $repository->findAll();
 
-       return $this->render('user/index.html.twig', [
+        return $this->render('user/index.html.twig', [
             'usuarios' => $usuarios
         ]);
-    }  
+    }
 }

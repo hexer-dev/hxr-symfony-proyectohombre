@@ -18,11 +18,7 @@ class CreateUserController extends AbstractController
         UserPasswordHasherInterface $hasherPassword,
         UserRepository $repository,
         Request $request
-    ): Response
-    {
-        //Comprobamos los permisos
-        //$this->denyAccessUnlessGranted($action->getPermission(), $entity);        
-
+    ): Response {
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
@@ -40,7 +36,7 @@ class CreateUserController extends AbstractController
             $user->setPassword($passowordHashed);
 
             $repository->add($user);
-            
+
             $this->addFlash('sucess', sprintf('Profesional de la aplicación creado'));
 
             return $this->redirectToRoute('app_user_list');

@@ -51,6 +51,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function onlyManagerAndConsultant()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb            
+            ->where(
+                $qb->expr()->orX(
+                    $qb->expr()->like('u.roles', ':manager'),
+                    $qb->expr()->like('u.roles', ':consultant')
+                )                
+            )
+            ->setParameter('manager', '%ROLE_MANAGER%')
+            ->setParameter('consultant', '%ROLE_CONSULTANT%')
+            ->orderBy('u.lastname', 'ASC')
+        ;
+
+        return $qb;
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

@@ -3,41 +3,41 @@
                         <div class="form-floating mb-3">
                             {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
                             <label>                                
-                                Nombre
+                                {{ form_label(form.name) }}
                             </label>
                             {{ form_errors(form.name) }}
                         </div>
                         <div class="form-floating mb-3">
                             {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
                             <label>                                
-                                Apellidos
+                                {{ form_label(form.lastname) }}
                             </label>
                             {{ form_errors(form.lastname) }}
                         </div>
                         <div class="form-floating mb-3">
                             {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
                             <label>                                
-                                Email
+                                {{ form_label(form.email) }}
                             </label>
                             {{ form_errors(form.email) }}
                         </div>
                         <div class="form-floating mb-3">
                             {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
                             <label>                                
-                                Contraseña
+                                {{ form_label(form.password.first) }}
                             </label>
                             {{ form_errors(form.password) }}
                         </div>
                          <div class="form-floating mb-3">
                             {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
                             <label>                                
-                                Repetir Contraseña
+                                {{ form_label(form.password.second) }}
                             </label>
                         </div>
                         <div class="form-floating mb-3">
                             {{ form_widget(form.roles, {'attr': {'class': 'select2 form-control'}}) }}
                             <label>                                
-                                Rol
+                                {{ form_label(form.roles) }}
                             </label>
                             {{ form_errors(form.roles) }}
                         </div>

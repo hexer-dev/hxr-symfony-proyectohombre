@@ -36,6 +36,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Headquarter $headquarter = null;
 
+    public function __toString(): string
+    {
+        return $this->getLastname() . ', ' . $this->getName();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
