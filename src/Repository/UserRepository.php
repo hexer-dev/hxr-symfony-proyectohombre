@@ -70,6 +70,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb;
     }
 
+    public function withoutSuperAdmin()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb            
+            ->andWhere(
+                $qb->expr()->notLike('u.roles', ':role')                
+            )
+            ->setParameter('role', '%ROLE_SUPER_ADMIN%')
+            ->orderBy('u.lastname', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

@@ -1,0 +1,69 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}Documentación{% endblock %}
+
+{% block content %}
+ <div class="row page-titles">
+    <div class="col-md-7 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Documentación</h3>
+    </div>
+    <div class="col-md-5 col-12 align-self-center">
+        <div class="d-flex mt-2 justify-content-end">
+            <div class="d-flex me-3 ms-2">
+                <div class="row button-group">
+                    <a href="{{ path('app_document_add') }}" title="nuevo">                
+                      <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                              <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nuevo
+                      </button>   
+                    </a>                 
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+ <div class="container-fluid">
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table customize-table mb-0 v-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th class="border-bottom border-top">Nombre</th>
+                        <th class="border-bottom border-top">Año</th>
+                        <th class="border-bottom border-top">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if documents is defined  and documents|length > 0 %}
+                {% for document in documents %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <span class="ms-3 fw-normal">{{ document.name}}</span>
+                            </div>
+                        </td>
+                        <td>{{ document.year|date('H:i d/m/Y') }}</td>
+                        <td>
+                        <div class="dropdown dropstart">
+                            <a href="#" class="link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i data-feather="more-horizontal" class="feather-sm"></i>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="{#{ path('app_headquarter_edit',{'id': headquarter.id}) }#}">Editar</a></li>
+                            <li><a class="dropdown-item" href="{#{ path('app_headquarter_remove',{'id': headquarter.id}) }#}">Eliminar</a></li>
+                            </ul>
+                        </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">No existen documentos en la aplicación</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

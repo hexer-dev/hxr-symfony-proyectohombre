@@ -2,6 +2,7 @@
 
 namespace App\Controller\User;
 
+use App\Security\Voter\UserVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,8 @@ class ViewUserController extends AbstractController
         Request $request
     ): Response {
         $user =  $this->getUser();
+
+        $this->denyAccessUnlessGranted(UserVoter::VIEW, $user);
 
         return $this->render('user/profile.html.twig', [
             'user' => $user

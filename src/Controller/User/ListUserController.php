@@ -2,7 +2,9 @@
 
 namespace App\Controller\User;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Security\Voter\UserVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +17,15 @@ class ListUserController extends AbstractController
         UserRepository $repository,
         Request $request
     ): Response {
-        $usuarios = $repository->findAll();
+        $this->denyAccessUnlessGranted(UserVoter::LIST, new User);
+
+        $currentUser = $this->getUser();
+
+        if (in_array('ROLE_SUPER_ADMIN', $currentUser->getRoles())) {
+            $usuarios = $repository->findAll();
+        } else {
+            $usuarios = $repository->withoutSuperAdmin();
+        }
 
         return $this->render('user/index.html.twig', [
             'usuarios' => $usuarios

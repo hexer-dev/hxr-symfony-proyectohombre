@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Security\Voter\UserVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,8 @@ class EditUserController extends AbstractController
         UserRepository $repository,
         Request $request
     ): Response {
+        $this->denyAccessUnlessGranted(UserVoter::EDIT, $user);
+        
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);

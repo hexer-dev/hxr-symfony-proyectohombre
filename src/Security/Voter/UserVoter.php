@@ -2,16 +2,16 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Headquarter;
 use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class HeadquarterVoter extends Voter
+class UserVoter extends Voter
 {
     public const EDIT = 'edit';
+    public const VIEW = 'view';
     public const LIST = 'list';
     public const ADD = 'add';
     public const DELETE = 'delete';
@@ -25,23 +25,20 @@ class HeadquarterVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!$subject instanceof Headquarter) {
-            return false;
-        }
-
-        if (!in_array($attribute, [self::EDIT, self::LIST, self::ADD, self::DELETE])) {
-            return false;
-        }
-
-        return true;
+        return in_array($attribute, [self::EDIT, self::VIEW, self::ADD, self::LIST, self::DELETE])
+            && $subject instanceof \App\Entity\User;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $currentUser = $token->getUser();
-        // if the user is anonymous, do not grant access
+
         if (!$currentUser instanceof UserInterface) {
             return false;
+        }
+
+        if ($attribute === self::VIEW) {
+            return $this->canView($subject, $currentUser);
         }
 
         if ($attribute === self::EDIT) {
@@ -58,6 +55,17 @@ class HeadquarterVoter extends Voter
 
         if ($attribute === self::DELETE) {
             return $this->canDelete($subject, $currentUser);
+        }
+
+        return false;
+    }
+
+    private function canView(mixed $subject, User $currentUser)
+    {
+        if (
+            $subject->getEmail() == $currentUser->getEmail()
+        ) {
+            return true;
         }
 
         return false;
