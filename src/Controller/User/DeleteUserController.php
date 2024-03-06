@@ -22,7 +22,7 @@ class DeleteUserController extends AbstractController
         
         $repository->remove($user);
 
-        $this->addFlash('sucess', sprintf('Profesional eliminado'));
+        $this->addFlash('success', sprintf('Profesional eliminado'));
 
         return $this->redirectToRoute('app_user_list');
     }

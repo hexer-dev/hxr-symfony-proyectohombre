@@ -31,7 +31,7 @@ class CreateHeadquarterController extends AbstractController
 
             $repository->add($headquarter);
 
-            $this->addFlash('sucess', sprintf('Sede creada correctamente'));
+            $this->addFlash('success', sprintf('Sede creada correctamente'));
 
             return $this->redirectToRoute('app_headquarter_list');
         } else if ($form->isSubmitted()) {

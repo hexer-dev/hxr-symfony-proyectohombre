@@ -30,7 +30,7 @@ class EditHeadquarterController extends AbstractController
 
             $repository->add($headquarter);
 
-            $this->addFlash('sucess', sprintf('Sede Actualizada'));
+            $this->addFlash('success', sprintf('Sede Actualizada'));
 
             return $this->redirectToRoute('app_headquarter_list');
         } else if ($form->isSubmitted()) {

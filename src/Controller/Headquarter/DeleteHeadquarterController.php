@@ -21,7 +21,7 @@ class DeleteHeadquarterController extends AbstractController
         
         $repository->remove($headquarter);
 
-        $this->addFlash('sucess', sprintf('Sede eliminada'));
+        $this->addFlash('success', sprintf('Sede eliminada'));
 
         return $this->redirectToRoute('app_headquarter_list');
     }

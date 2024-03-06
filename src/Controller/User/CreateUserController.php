@@ -40,7 +40,7 @@ class CreateUserController extends AbstractController
 
             $repository->add($user);
 
-            $this->addFlash('sucess', sprintf('Profesional de la aplicación creado'));
+            $this->addFlash('success', sprintf('Profesional de la aplicación creado'));
 
             return $this->redirectToRoute('app_user_list');
         } else if ($form->isSubmitted()) {

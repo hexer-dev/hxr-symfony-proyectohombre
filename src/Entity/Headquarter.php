@@ -30,10 +30,14 @@ class Headquarter
     #[ORM\OneToMany(targetEntity: Document::class, mappedBy: 'headquarter')]
     private Collection $documents;
 
+    #[ORM\OneToMany(targetEntity: Program::class, mappedBy: 'headquarter', orphanRemoval: true)]
+    private Collection $programs;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        $this->programs = new ArrayCollection();
     }
 
     public function __toString()
@@ -136,6 +140,36 @@ class Headquarter
             // set the owning side to null (unless already changed)
             if ($document->getHeadquarter() === $this) {
                 $document->setHeadquarter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Program>
+     */
+    public function getPrograms(): Collection
+    {
+        return $this->programs;
+    }
+
+    public function addProgram(Program $program): static
+    {
+        if (!$this->programs->contains($program)) {
+            $this->programs->add($program);
+            $program->setHeadquarter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgram(Program $program): static
+    {
+        if ($this->programs->removeElement($program)) {
+            // set the owning side to null (unless already changed)
+            if ($program->getHeadquarter() === $this) {
+                $program->setHeadquarter(null);
             }
         }
 

@@ -3,9 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Document;
-use App\Entity\Headquarter;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,9 +22,21 @@ class DocumentType extends AbstractType
                 'label' => 'Nombre',
                 'required' => true
             ])
+            ->add('typeDocument', ChoiceType::class, [
+                'label' => '¿Tipo documento a subir?',
+                'choices' => [
+                    'Archivo' => 'file',
+                    'Enlace' => 'link',
+                ],
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
+                'mapped' => false                
+            ])
             ->add('file', FileType::class, [
                 'label' => 'Archivo',
-                'required' => false
+                'required' => false,
+                'mapped' => false
             ])
             ->add('link', UrlType::class, [
                 'label' => 'Enlace',
@@ -34,11 +45,6 @@ class DocumentType extends AbstractType
             ])
             ->add('year', IntegerType::class, [
                 'label' => 'Año',
-                'required' => false
-            ])
-            ->add('headquarter', EntityType::class, [
-                'class' => Headquarter::class,
-                'label' => 'Sede',
                 'required' => false
             ])
             ->add('save', SubmitType::class, [

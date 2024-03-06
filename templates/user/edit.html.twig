@@ -36,3 +36,23 @@
     </div>
 </div>
 {% endblock %}
+
+{% block footer_javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery( document ).ready(function () {
+            jQuery('select#user_roles').on('change', function(e){ 
+                var optionSelected = jQuery(this).find(":selected").val();
+
+                if (optionSelected == 'ROLE_MANAGER' || optionSelected == 'ROLE_CONSULTANT') {
+                    jQuery('.form-user-headquarter').removeClass("no-visible");  
+                } else {
+                    if (!jQuery('.form-user-headquarter').hasClass("no-visible")) {
+                        jQuery('.form-user-headquarter').addClass("no-visible");  
+                    }                    
+                }
+            });
+        }); 
+        
+    </script>
+{% endblock %}

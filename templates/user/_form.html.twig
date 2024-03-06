@@ -35,11 +35,19 @@
                             </label>
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form_widget(form.roles, {'attr': {'class': 'select2 form-control'}}) }}
+                            {{ form_widget(form.roles, {'attr': {'class': 'form-select'}}) }}
                             <label>                                
                                 {{ form_label(form.roles) }}
                             </label>
-                            {{ form_errors(form.roles) }}
+                            {{ form_errors(form.roles) }}                                                    
+                        </div>
+                        {% set classVisible = entity.headquarter is null ? 'no-visible' : '' %}
+                        <div class="form-floating mb-3 form-user-headquarter {{ classVisible }}">
+                            {{ form_widget(form.headquarter, {'attr': {'class': 'select2 form-select'}}) }}
+                            <label>                                
+                                {{ form_label(form.headquarter) }}
+                            </label>
+                            {{ form_errors(form.headquarter) }}
                         </div>
                         <div class="d-md-flex align-items-center">                      
                             <div class="mt-3 mt-md-0 ms-auto">

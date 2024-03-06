@@ -1,6 +1,6 @@
 {% extends 'app.html.twig' %}
 
-{% block title %}Nuevo Documento{% endblock %}
+{% block title %}Editar Documento{% endblock %}
 
 {% block content %}
  <div class="row page-titles">
@@ -11,7 +11,7 @@
         <div class="d-flex mt-2 justify-content-end">
             <div class="d-flex me-3 ms-2">
                 <div class="row button-group">
-                    <a href="{{ path('app_document_list') }}" title="nuevo">                
+                    <a href="{{ path('app_document_list') }}" title="Volver">                
                       <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
                               <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
                       </button>   
@@ -27,7 +27,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Nuevo Documento</h4>
+                    <h4 class="card-title">Editar Documento</h4>
 
                     {{ include('document/_form.html.twig') }}
                 </div>

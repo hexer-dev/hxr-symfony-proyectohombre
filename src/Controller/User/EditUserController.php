@@ -41,7 +41,7 @@ class EditUserController extends AbstractController
 
             $repository->add($user);
 
-            $this->addFlash('sucess', sprintf('Profesional Actualizado'));
+            $this->addFlash('success', sprintf('Profesional Actualizado'));
 
             return $this->redirectToRoute('app_user_list');
         } else if ($form->isSubmitted()) {

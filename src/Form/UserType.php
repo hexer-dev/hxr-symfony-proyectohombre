@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Headquarter;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -37,7 +39,7 @@ class UserType extends AbstractType
                 'required' => true
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'Roles',
+                'label' => 'Perfil',
                 'choices'  => $roles,
                 'multiple' => true,
                 'expanded' => false,
@@ -63,7 +65,13 @@ class UserType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Guardar'
-            ]);
+            ])
+            ->add('headquarter', EntityType::class, [
+                'class' => Headquarter::class,
+                'label' => 'Sede',
+                'required' => false
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

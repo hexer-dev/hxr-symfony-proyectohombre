@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\DocumentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
 class Document
@@ -15,6 +16,8 @@ class Document
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -32,11 +35,21 @@ class Document
     #[ORM\ManyToOne(inversedBy: 'documents')]
     private ?Headquarter $headquarter = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $path = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documents')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $createdBy = null;
+
+    #[ORM\ManyToOne(inversedBy: 'documents')]
+    private ?Program $program = null;
+
     public function __construct()
     {
         $currentDate = new \DateTime('NOW');
-        $this->date_add = $currentDate;
-        $this->year = intval($currentDate->format('Y'));
+        $this->setDateAdd($currentDate);
+        $this->setYear($currentDate->format('Y'));
     }
 
     public function getId(): ?int
@@ -112,6 +125,42 @@ class Document
     public function setHeadquarter(?Headquarter $headquarter): static
     {
         $this->headquarter = $headquarter;
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(?string $path): static
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): static
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getProgram(): ?Program
+    {
+        return $this->program;
+    }
+
+    public function setProgram(?Program $program): static
+    {
+        $this->program = $program;
 
         return $this;
     }

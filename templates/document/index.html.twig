@@ -42,15 +42,16 @@
                                 <span class="ms-3 fw-normal">{{ document.name}}</span>
                             </div>
                         </td>
-                        <td>{{ document.year|date('H:i d/m/Y') }}</td>
+                        <td>{{ document.year }}</td>
                         <td>
                         <div class="dropdown dropstart">
                             <a href="#" class="link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             <i data-feather="more-horizontal" class="feather-sm"></i>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="{#{ path('app_headquarter_edit',{'id': headquarter.id}) }#}">Editar</a></li>
-                            <li><a class="dropdown-item" href="{#{ path('app_headquarter_remove',{'id': headquarter.id}) }#}">Eliminar</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_document_view',{'id': document.id}) }}">Ver</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_document_edit',{'id': document.id}) }}">Editar</a></li>                            
+                            <li><a class="dropdown-item" href="{{ path('app_document_delete',{'id': document.id}) }}">Eliminar</a></li>
                             </ul>
                         </div>
                         </td>
