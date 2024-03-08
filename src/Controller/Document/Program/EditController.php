@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller\Document;
+namespace App\Controller\Document\Program;
 
 use App\Entity\Document;
 use App\Form\DocumentType;
 use App\Repository\DocumentRepository;
-use App\Security\Voter\DocumentVoter;
+use App\Security\Voter\ProgramVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,16 +15,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class EditController extends AbstractController
 {
-    #[Route('/document/edit/{id}', name: 'app_document_edit')]
+    #[Route('/program/document/edit/{id}', name: 'app_program_document_edit')]
     public function edit(
         Document $document,
         DocumentRepository $repository,
         SluggerInterface $slugger,
         Request $request
     ): Response {
-        $this->denyAccessUnlessGranted(DocumentVoter::EDIT, $document);
+        $program = $document->getProgram();
 
-        $currentUser = $this->getUser();
+        $this->denyAccessUnlessGranted(ProgramVoter::EDIT, $program);
 
         $form = $this->createForm(DocumentType::class, $document);
 
@@ -32,21 +32,15 @@ class EditController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $document = $form->getData();
-            $headquarter = $currentUser->getHeadquarter();
 
-            $fileUpload = $form->get('file')->getData();
+            $pathUpload = $this->getParameter('files_directory') . 'program/' . $program->getId();
+
             $typeDocument = $form->get('typeDocument')->getData();
 
             if ($typeDocument == "file") {
+                $fileUpload = $form->get('file')->getData();
+
                 if ($fileUpload) {
-                    $pathUpload = $this->getParameter('files_directory');
-
-                    if (null === $headquarter) {
-                        $pathUpload .= 'user/' .  $currentUser->getId();
-                    } else {
-                        $pathUpload .= 'headquarter/' . $headquarter->getId();
-                    }
-
                     $originalFilename = pathinfo($fileUpload->getClientOriginalName(), PATHINFO_FILENAME);
                     $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename . '-' . uniqid() . '.' . $fileUpload->guessExtension();
@@ -87,14 +81,16 @@ class EditController extends AbstractController
 
             $repository->add($document);
 
-            $this->addFlash('success', sprintf('Documento Actualizada'));
+            $this->addFlash('success', sprintf('Documento editado correctamente %s asociado al programa %s', $document->getName(), $program->getName()));
 
-            return $this->redirectToRoute('app_document_list');
+            return $this->redirectToRoute('app_program_edit', [
+                'id' => $program->getId()
+            ]);
         } else if ($form->isSubmitted()) {
             $this->addFlash('danger', 'Hay errores en el formulario y no ha sido posible actualizar el documento.');
         }
 
-        return $this->render('document/edit.html.twig', [
+        return $this->render('document/program/edit.html.twig', [
             'entity' => $document,
             'form' => $form->createView()
         ]);

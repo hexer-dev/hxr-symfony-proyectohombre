@@ -56,16 +56,18 @@
 
 {% block footer_javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
-         jQuery( document ).ready(function () {
-            if (jQuery('#datatable-documents').length > 0 ){                            
-                jQuery("#datatable-documents").DataTable({
-                    responsive: true,
-                    language: {
-                    url: "{{ asset('dist/js/datatables_i18n_es-ES.json') }}"
-                    }
-                });
-            }    
-        });
-    </script>
+    {% if program.documents is defined  and program.documents|length > 0 %}
+      <script type="text/javascript">
+          jQuery( document ).ready(function () {
+              if (jQuery('#datatable-documents').length > 0 ){                            
+                  jQuery("#datatable-documents").DataTable({
+                      responsive: true,
+                      language: {
+                      url: "{{ asset('dist/js/datatables_i18n_es-ES.json') }}"
+                      }
+                  });
+              }    
+          });
+      </script>
+    {% endif %}
   {% endblock %}

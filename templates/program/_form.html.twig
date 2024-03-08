@@ -74,7 +74,7 @@
                 <div class="row">
                         <div class="col-12 text-end d-flex justify-content-md-end justify-content-center">
                             <div class="row button-group">
-                                <a href="{{ path('app_document_add_program', {'id': program.id }) }}" title="nuevo">                
+                                <a href="{{ path('app_program_document_add', {'id': program.id }) }}" title="nuevo">                
                                 <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
                                         <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nuevo
                                 </button>   
@@ -103,10 +103,10 @@
                                                 <a href="{{ path('app_document_view_program', {'id': document.id }) }}" class="text-info edit">
                                                     <i data-feather="eye" class="feather-sm fill-white"></i>
                                                 </a>
-                                                <a href="{{ path('app_document_edit', {'id': document.id }) }}" class="text-primary edit">
+                                                <a href="{{ path('app_program_document_edit', {'id': document.id }) }}" class="text-primary edit">
                                                     <i data-feather="edit" class="feather-sm fill-white"></i>
                                                 </a>   
-                                                <a href="{{ path('app_document_delete', {'id': document.id }) }}" class="text-dark delete ms-2">
+                                                <a href="{{ path('app_program_document_delete', {'id': document.id }) }}" class="text-dark delete ms-2">
                                                     <i data-feather="trash-2" class="feather-sm fill-white"></i>
                                                 </a>
                                             </div>

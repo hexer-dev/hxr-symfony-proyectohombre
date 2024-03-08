@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Document;
+namespace App\Controller\Document\Program;
 
 use App\Entity\Document;
 use App\Repository\DocumentRepository;
@@ -9,9 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class ViewProgramController extends AbstractController
+class ViewController extends AbstractController
 {
-    #[Route('/document/view/program/{id}', name: 'app_document_view_program')]
+    #[Route('/program/document/view/{id}', name: 'app_document_view_program')]
     public function view(
         Document $document
     ): Response

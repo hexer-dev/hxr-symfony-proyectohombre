@@ -62,7 +62,26 @@ class ProgramVoter extends Voter
 
     private function canView(mixed $subject, User $currentUser)
     {
-        return true;
+        if (
+            $this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_ADMIN')
+        ) {
+            return true;
+        }
+
+        $sameHeadquarter = (null !== $subject->getHeadquarter() && $subject->getHeadquarter() == $currentUser->getHeadquarter()) ? true : false;
+
+        if (
+            (
+                $this->security->isGranted('ROLE_USER_MANAGER')
+                || $this->security->isGranted('ROLE_CONSULTANT')
+            )
+            && $sameHeadquarter
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     private function canEdit(mixed $subject, User $currentUser)

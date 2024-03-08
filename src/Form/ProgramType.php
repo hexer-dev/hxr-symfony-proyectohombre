@@ -34,14 +34,14 @@ class ProgramType extends AbstractType
             ])
             ->add('date_start', DateType::class, [
                 'label' => 'Fecha Inicio',
-                'html5' => false,
-                'format' => 'dd/MM/yyyy',
+                'widget' => 'single_text',
+                'html5' => true,
                 'required' => true,
             ])
             ->add('date_end', DateType::class, [
                 'label' => 'Fecha Fin',
-                'html5' => false,
-                'format' => 'dd/MM/yyyy',
+                'widget' => 'single_text',
+                'html5' => true,
                 'required' => true,
             ])
             ->add('headquarter', EntityType::class, [
