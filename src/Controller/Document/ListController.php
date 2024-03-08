@@ -17,17 +17,15 @@ class ListController extends AbstractController
         DocumentRepository $repository,
         Request $request
     ): Response {
-        $this->denyAccessUnlessGranted(DocumentVoter::LIST, new Document);        
+        $this->denyAccessUnlessGranted(DocumentVoter::LIST, new Document);
 
         $currentUser = $this->getUser();
-        $headquarter = $currentUser->getHeadquarter();
+        $headquarter = $currentUser->getHeadquarter();        
 
         if (null !== $headquarter) {
-            $headquarter = $headquarter->getId();
-
-            $documents = $repository->findBy(['headquarter' => $headquarter]);
+            $documents = $repository->managerPrivateDocument($headquarter);
         } else {
-            $documents = $repository->findAll();
+            $documents = $repository->headquarterPrivateDocument();
         }
 
         return $this->render('document/index.html.twig', [

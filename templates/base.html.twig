@@ -17,10 +17,11 @@
         <meta name="robots" content="noindex,nofollow" />
         
         {% block stylesheets %}
-            <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet" />
-            <link href="{{ asset('dist/css/custom.min.css') }}" rel="stylesheet" />
             <link href="{{ asset('dist/libs/select2/dist/css/select2.min.css') }}" rel="stylesheet" >
             <link href="{{ asset('dist/libs/prismjs/themes/prism-okaidia.min.css') }}" rel="stylesheet" >
+            <link href="{{ asset('dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" >
+            <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet" />
+            <link href="{{ asset('dist/css/custom.min.css') }}" rel="stylesheet" />
         {% endblock %}
 
         {% block javascripts %}
@@ -51,7 +52,8 @@
             <!-- select -->
             <script src="{{ asset('dist/libs/select2/dist/js/select2.full.min.js') }}"></script>
             <!-- tables -->            
-            <script src="{{ asset('dist/libs/prismjs/prism.js') }}"></script>            
+            <script src="{{ asset('dist/libs/prismjs/prism.js') }}"></script> 
+            <script src="{{ asset('dist/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script> 
         {% endblock %}
     </body>
 </html>

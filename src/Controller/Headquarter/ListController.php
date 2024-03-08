@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class ListHeadquarterController extends AbstractController
+class ListController extends AbstractController
 {
     #[Route('/headquarter', name: 'app_headquarter_list')]
     public function list(

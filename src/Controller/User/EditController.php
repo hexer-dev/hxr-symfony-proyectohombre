@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-class EditUserController extends AbstractController
+class EditController extends AbstractController
 {
     #[Route('/user/edit/{id}', name: 'app_user_edit')]
     public function edit(

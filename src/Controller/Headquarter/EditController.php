@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class EditHeadquarterController extends AbstractController
+class EditController extends AbstractController
 {
     #[Route('/headquarter/edit/{id}', name: 'app_headquarter_edit')]
     public function edit(

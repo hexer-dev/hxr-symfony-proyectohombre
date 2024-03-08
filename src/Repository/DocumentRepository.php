@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Document;
+use App\Entity\Headquarter;
+use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -31,6 +33,57 @@ class DocumentRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->remove($document);
         $this->getEntityManager()->flush();
+    }
+
+    public function headquarterPrivateDocument(): array
+    {
+        $qb = $this->createQueryBuilder('d');
+
+        return $qb
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->isNull('d.headquarter'),
+                    $qb->expr()->isNull('d.program')
+                )
+            )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function managerPrivateDocument(Headquarter $headquarter): array
+    {
+        $qb = $this->createQueryBuilder('d');
+
+        return $qb
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('d.headquarter', ':headquarter'),
+                    $qb->expr()->isNull('d.program')
+                )
+            )
+            ->setParameter('headquarter', $headquarter)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function managerProgramDocument(Headquarter $headquarter, Program $program): array
+    {
+        $qb = $this->createQueryBuilder('d');
+
+        return $qb
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('d.headquarter', ':headquarter'),
+                    $qb->expr()->eq('d.program', ':program')
+                )
+            )
+            ->setParameter('headquarter', $headquarter)
+            ->setParameter('program', $program)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     //    /**

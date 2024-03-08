@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class DeleteHeadquarterController extends AbstractController
+class DeleteController extends AbstractController
 {
     #[Route('/headquarter/remove/{id}', name: 'app_headquarter_remove')]
     public function remove(

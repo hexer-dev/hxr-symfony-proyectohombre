@@ -46,11 +46,32 @@
     </div>
     <div class="tab-pane  p-3" id="professionals" role="tabpanel">
         <div class="form-floating mb-3">
-            {{ form_widget(form.users, {'attr': {'class': 'select2 form-control'}}) }}
-            <label>                                
-                {{ form_label(form.users) }}
-            </label>
-                {{ form_errors(form.users) }}
+            <div class="table-responsive table-responsive-professional">
+                    <table id="datatable-professional" class="table display table-bordered table-striped no-wrap">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if headquarter.users is defined  and headquarter.users|length > 0 %}
+                                {% for user in headquarter.users %}
+                                    <tr>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.lastname }}</td>
+                                        <td>{{ user.email }}</td>                                        
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                    <tr>
+                                        <td colspan="3">No existen profesionales para esta sede</td>
+                                    </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+            </div>
         </div>
     </div>
 </div>

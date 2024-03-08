@@ -11,7 +11,11 @@
         <div class="d-flex mt-2 justify-content-end">
             <div class="d-flex me-3 ms-2">
                 <div class="row button-group">
-                    <a href="{{ path('app_document_list') }}" title="nuevo">                
+                    {% if program is defined %}
+                        <a href="{{ path('app_program_edit', {'id': program.id}) }}" title="nuevo">                
+                    {% else %}
+                        <a href="{{ path('app_document_list') }}" title="nuevo">                
+                    {% endif %}                    
                       <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
                               <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
                       </button>   

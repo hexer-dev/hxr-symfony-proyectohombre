@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class ListUserController extends AbstractController
+class ListController extends AbstractController
 {
     #[Route('/user', name: 'app_user_list')]
     public function list(

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Headquarter;
 use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,6 +21,33 @@ class ProgramRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Program::class);
     }
+
+    public function add(Program $program)
+    {
+        $this->getEntityManager()->persist($program);
+        $this->getEntityManager()->flush();
+    }
+
+    public function remove(Program $program)
+    {
+        $this->getEntityManager()->remove($program);
+        $this->getEntityManager()->flush();
+    }
+
+    public function managerPrograms(Headquarter $headquarter): array
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        return $qb
+            ->where(
+                $qb->expr()->eq('p.headquarter', ':headquarter'),
+            )
+            ->setParameter('headquarter', $headquarter)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
 
 //    /**
 //     * @return Program[] Returns an array of Program objects

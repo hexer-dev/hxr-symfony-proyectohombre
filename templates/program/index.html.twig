@@ -1,0 +1,76 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}Programas{% endblock %}
+
+{% block content %}
+ <div class="row page-titles">
+    <div class="col-md-7 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Programas</h3>
+    </div>
+    <div class="col-md-5 col-12 align-self-center">
+        <div class="d-flex mt-2 justify-content-end">
+            <div class="d-flex me-3 ms-2">
+                <div class="row button-group">
+                    <a href="{{ path('app_program_add') }}" title="nuevo">                
+                      <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                              <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nuevo
+                      </button>   
+                    </a>                 
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+ <div class="container-fluid">
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table customize-table mb-0 v-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th class="border-bottom border-top">Código</th>
+                        <th class="border-bottom border-top">Nombre</th>
+                        <th class="border-bottom border-top">Comienzo</th>
+                        <th class="border-bottom border-top">Fin</th>
+                        <th class="border-bottom border-top">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if programs is defined  and programs|length > 0 %}
+                {% for program in programs %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <span class="ms-3 fw-normal">{{ program.code}}</span>
+                            </div>
+                        </td>
+                        <td>{{ program.name }}</td>
+                        <td>{{ program.datestart|date('d/m/Y', 'Europe/Madrid') }}</td>
+                        <td>{{ program.dateend|date('d/m/Y', 'Europe/Madrid')  }}</td>
+                        <td>
+                        <div class="dropdown dropstart">
+                            <a href="#" class="link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i data-feather="more-horizontal" class="feather-sm"></i>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="{{ path('app_program_view',{'id': program.id}) }}">Ver</a></li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+                                <li><a class="dropdown-item" href="{{ path('app_program_edit',{'id': program.id}) }}">Editar</a></li>                            
+                                <li><a class="dropdown-item" href="{{ path('app_program_delete',{'id': program.id}) }}">Eliminar</a></li>
+                            {% endif %}
+                            </ul>
+                        </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">No existen programas para su sede</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class DeleteUserController extends AbstractController
+class DeleteController extends AbstractController
 {
     #[Route('/user/remove/{id}', name: 'app_user_remove')]
     public function remove(        

@@ -96,15 +96,19 @@ class DocumentVoter extends Voter
             return true;
         }
 
+        $sameUser = (null !== $subject->getCreatedBy() && $subject->getCreatedBy() == $currentUser) ? true : false;
+
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
 
-        $sameUser = (null !== $subject->getCreatedBy() && $subject->getCreatedBy() == $currentUser) ? true : false;
+        $sameHeadquarter = (null !== $subject->getHeadquarter() && $subject->getHeadquarter() == $currentUser->getHeadquarter()) ? true : false;
+        $isDocumentProgram = (null !== $subject->getProgram()) ? true : false;
 
         if (
             $this->security->isGranted('ROLE_USER_MANAGER') 
-            && $sameUser
+            && $sameHeadquarter 
+            && !$isDocumentProgram
         ) {
             return true;
         }
@@ -136,10 +140,10 @@ class DocumentVoter extends Voter
             return true;
         }
 
-        $sameUser = (null !== $subject->getCreatedBy() && $subject->getCreatedBy() == $currentUser) ? true : false;
+        $sameHeadquarter = (null !== $subject->getHeadquarter() && $subject->getHeadquarter() == $currentUser->getHeadquarter()) ? true : false;
 
         if ($this->security->isGranted('ROLE_USER_MANAGER') 
-            && $sameUser
+            && $sameHeadquarter
         ) {
             return true;
         }

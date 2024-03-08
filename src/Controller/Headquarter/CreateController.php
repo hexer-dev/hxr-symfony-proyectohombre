@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class CreateHeadquarterController extends AbstractController
+class CreateController extends AbstractController
 {
     #[Route('/headquarter/add', name: 'app_headquarter_add')]
     public function add(

@@ -29,16 +29,6 @@ class HeadquarterType extends AbstractType
                 'label' => 'Dirección',
                 'required' => false
             ])
-            ->add('users', EntityType::class, [
-                'class' => User::class,
-                'label' => 'Profesionales',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->onlyManagerAndConsultant();
-                },
-                'required' => true,
-                'multiple' => true,
-                'expanded' => false
-            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Guardar'
             ]);

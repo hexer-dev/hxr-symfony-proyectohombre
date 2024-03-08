@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class CreateUserController extends AbstractController
+class CreateController extends AbstractController
 {
     #[Route('/user/add', name: 'app_user_add', methods: ['GET', 'POST'])]
     public function add(
