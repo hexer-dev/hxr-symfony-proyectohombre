@@ -30,7 +30,7 @@
                     <tr>
                         <th class="border-bottom border-top">Nombre</th>
                         <th class="border-bottom border-top">Año</th>
-                        <th class="border-bottom border-top">Actions</th>
+                        <th class="border-bottom border-top">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li><a class="dropdown-item" href="{{ path('app_document_view',{'id': document.id}) }}">Ver</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_document_edit',{'id': document.id}) }}">Editar</a></li>                            
-                            <li><a class="dropdown-item" href="{{ path('app_document_delete',{'id': document.id}) }}">Eliminar</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_document_remove',{'id': document.id}) }}">Eliminar</a></li>
                             </ul>
                         </div>
                         </td>

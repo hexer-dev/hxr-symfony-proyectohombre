@@ -1,17 +1,17 @@
 {% extends 'app.html.twig' %}
 
-{% block title %}Profesionales{% endblock %}
+{% block title %}Personas Beneficiarias{% endblock %}
 
 {% block content %}
  <div class="row page-titles">
     <div class="col-md-7 col-12 align-self-center">
-        <h3 class="text-themecolor mb-0">Profesionales</h3>
+        <h3 class="text-themecolor mb-0">Personas Beneficiarias</h3>
     </div>
     <div class="col-md-5 col-12 align-self-center">
         <div class="d-flex mt-2 justify-content-end">
             <div class="d-flex me-3 ms-2">
                 <div class="row button-group">
-                    <a href="{{ path('app_user_add') }}" title="nuevo">                
+                    <a href="{{ path('app_person_add') }}" title="nuevo">                
                       <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
                               <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nuevo
                       </button>   
@@ -28,30 +28,28 @@
           <table class="table customize-table mb-0 v-middle">
               <thead class="table-light">
                   <tr>
+                      <th class="border-bottom border-top">NIF</th>
                       <th class="border-bottom border-top">Nombre</th>
                       <th class="border-bottom border-top">Apellidos</th>
-                      <th class="border-bottom border-top">Email</th>
-                      <th class="border-bottom border-top">Rol</th>
+                      <th class="border-bottom border-top">Teléfono</th>
                       <th class="border-bottom border-top">Acciones</th>
                   </tr>
               </thead>
               <tbody>
-              {% if usuarios is defined and usuarios|length > 0%}
-                {% for user in usuarios %}
+              {% if people is defined and people|length > 0%}
+                {% for person in people %}
                   <tr>
                       <td>
                           <div class="d-flex align-items-center">
-                              <span class="ms-3 fw-normal">{{ user.name}}</span>
+                              <span class="ms-3 fw-normal">{{ person.nif}}</span>
                           </div>
                       </td>
-                      <td>{{ user.lastname}}</td>
+                      <td>{{ person.name}}</td>
+                      <td>{{ person.lastname}}</td>
                       <td>
                           <div class="d-flex align-items-center">                                                
-                            {{ user.email }}
+                            {{ (null != person.phone) ? person.phone : '---' }}
                           </div>
-                      </td>
-                      <td>
-                          {{ user.roles[0]}}
                       </td>
                       <td>
                         <div class="dropdown dropstart">
@@ -59,8 +57,9 @@
                             <i data-feather="more-horizontal" class="feather-sm"></i>
                           </a>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="{{ path('app_user_edit',{'id': user.id}) }}">Editar</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_user_remove',{'id': user.id}) }}">Eliminar</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_person_view',{'id': person.id}) }}">Ver</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_person_edit',{'id': person.id}) }}">Editar</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_person_remove',{'id': person.id}) }}">Eliminar</a></li>
                           </ul>
                         </div>
                       </td>
@@ -68,7 +67,7 @@
                   {% endfor %}
                 {% else %}
                     <tr>
-                      <td colspan="5">No existen usuarios en la aplicación</td>
+                      <td colspan="5">No existen personas beneficias en la aplicación</td>
                     </tr>
                 {% endif %}
               </tbody>

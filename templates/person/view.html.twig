@@ -1,0 +1,82 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}Ver Persona Beneficiaria{% endblock %}
+
+{% block content %}
+ <div class="row page-titles">
+    <div class="col-md-7 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Persona {{ person.name }}</h3>
+    </div>
+    <div class="col-md-5 col-12 align-self-center">
+        <div class="d-flex mt-2 justify-content-end">
+            <div class="d-flex me-3 ms-2">
+            </div>
+        </div>
+    </div>
+ </div>
+
+ <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Información de la presona</h4>
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link d-flex active" data-bs-toggle="tab" href="#setting" role="tab">
+                        <span><i class="ti-home"></i></span>
+                        <span class="d-none d-md-block ms-2">Datos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex" data-bs-toggle="tab" href="#documents" role="tab">
+                        <span><i class="ti-briefcase"></i></span>
+                        <span class="d-none d-md-block ms-2">Documentos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex" data-bs-toggle="tab" href="#programs" role="tab">
+                        <span><i class="ti-clipboard"></i></span>
+                        <span class="d-none d-md-block ms-2">Programas</span>
+                    </a>
+                </li>
+            </ul>            
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane active" id="setting" role="tabpanel">
+                 {{ include('person/view/_info.html.twig') }}
+              </div>
+              <div class="tab-pane p-3" id="documents" role="tabpanel">
+                 {{ include('person/view/_documents.html.twig') }}
+              </div>
+              <div class="tab-pane p-3" id="programs" role="tabpanel">
+                 {{ include('person/view/_programs.html.twig') }}
+              </div>
+            </div>
+            <!-- end tab -->
+          </div>          
+        </div>
+        <!-- end card -->
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer_javascripts %}
+    {{ parent() }}
+    {#% if program.documents is defined  and program.documents|length > 0 %}
+      <script type="text/javascript">
+          jQuery( document ).ready(function () {
+              if (jQuery('#datatable-documents').length > 0 ){                            
+                  jQuery("#datatable-documents").DataTable({
+                      responsive: true,
+                      language: {
+                      url: "{{ asset('dist/js/datatables_i18n_es-ES.json') }}"
+                      }
+                  });
+              }    
+          });
+      </script>
+    {% endif %#}
+  {% endblock %}

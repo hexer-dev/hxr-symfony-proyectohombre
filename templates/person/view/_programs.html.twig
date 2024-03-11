@@ -1,0 +1,32 @@
+<div class="table-responsive table-responsive-document">
+    <table id="datatable-documents" class="table display table-bordered table-striped no-wrap">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {#% if program.documents is defined  and program.documents|length > 0 %}
+                {% for document in program.documents %}
+                    <tr>
+                        <td>{{ document.name }}</td>
+                        <td>{{ document.year }}</td>
+                        <td>
+                            <div class="action-btn">                                                                                         
+                                <a href="{{ path('app_document_view_program', {'id': document.id }) }}" class="text-info edit">
+                                    <i data-feather="eye" class="feather-sm fill-white"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No existen documentos para este programa</td>
+                </tr>
+            {% endif %#}
+        </tbody>
+    </table>
+</div>

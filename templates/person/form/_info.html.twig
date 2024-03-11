@@ -1,0 +1,71 @@
+        {{ form_start(form) }}
+        <div class="p-3">
+            <div class="form-floating mb-3">
+                {{ form_widget(form.nif, {'attr': {'class': 'form-control'}}) }}
+                <label>                                
+                    {{ form_label(form.nif) }}
+                </label>
+                <div class="invalid-feedback">
+                    {{ form_errors(form.nif) }}
+                </div>
+                
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                <label>                                
+                    {{ form_label(form.name) }}
+                </label>
+                {{ form_errors(form.name) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                <label>                        
+                    {{ form_label(form.lastname) }}
+                </label>
+                <div class="invalid-feedback">
+                    {{ form_errors(form.lastname) }}
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_widget(form.gender, {'attr': {'class': 'select2 form-control'}}) }}
+                <label>                                
+                    {{ form_label(form.gender) }}
+                </label>
+                <div class="invalid-feedback">
+                    {{ form_errors(form.gender) }}
+                </div>
+            </div>
+             <div class="form-floating mb-3">
+                {{ form_widget(form.birthdate, {'attr': {'class': 'form-control'}}) }}
+                <label>                        
+                    {{ form_label(form.birthdate) }}
+                </label>
+                <div class="invalid-feedback">
+                    {{ form_errors(form.birthdate) }}
+                </div>
+            </div>
+             <div class="form-floating mb-3">
+                {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                <label>                        
+                    {{ form_label(form.phone) }}
+                </label>
+                <div class="invalid-feedback">
+                    {{ form_errors(form.phone) }}
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+                <label>                        
+                    {{ form_label(form.address) }}
+                </label>
+                <div class="invalid-feedback">
+                    {{ form_errors(form.address) }}
+                </div>
+            </div>                
+            <div class="d-md-flex align-items-center">                      
+                <div class="mt-3 mt-md-0 ms-auto">
+                    {{  form_row(form.save, {'attr': {'class': 'btn btn-info font-weight-medium rounded-pill px-4'}}) }}
+                </div>
+            </div>                    
+        </div> 
+        {{ form_end(form) }}

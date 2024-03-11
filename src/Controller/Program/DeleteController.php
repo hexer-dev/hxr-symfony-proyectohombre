@@ -22,7 +22,6 @@ class DeleteController extends AbstractController
         $this->denyAccessUnlessGranted(ProgramVoter::DELETE, $program);
 
         /* Eliminar todos los archivos del programa */        
-
         $repository->remove($program);
 
         $this->addFlash('success', sprintf('Programa eliminado'));

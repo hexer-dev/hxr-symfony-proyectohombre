@@ -1,0 +1,39 @@
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link d-flex active" data-bs-toggle="tab" href="#setting" role="tab">
+            <span><i class="ti-home"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">Datos</span>
+        </a>
+    </li>
+    {% if person.id is defined and person.id is not null %}
+        <li class="nav-item">
+            <a class="nav-link d-flex" data-bs-toggle="tab" href="#documents" role="tab">
+                <span><i class="ti-briefcase"></i></span>
+                <span class="d-none d-md-block ms-2">Documentos</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex" data-bs-toggle="tab" href="#programs" role="tab">
+                <span><i class="ti-clipboard"></i></span>
+                <span class="d-none d-md-block ms-2">Programas</span>
+            </a>
+        </li>
+    {% endif %}    
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="setting" role="tabpanel">
+        {{ include('person/form/_info.html.twig') }}
+    </div>
+    {% if person.id is defined and person.id is not null %}
+        <div class="tab-pane p-3" id="documents" role="tabpanel">
+            {{ include('person/form/_documents.html.twig') }}
+        </div>
+        <div class="tab-pane p-3" id="programs" role="tabpanel">
+            {{ include('person/form/_programs.html.twig') }}
+        </div>
+    {% endif %}
+</div>

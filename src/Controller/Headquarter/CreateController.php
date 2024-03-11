@@ -29,6 +29,18 @@ class CreateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $headquarter = $form->getData();
 
+            $phone = null;
+            
+            if (
+                null !== $headquarter->getPhone() 
+                && !empty($headquarter->getPhone())
+            ) {
+                $characterReplace = array(' ', '-', '.');
+                $phone = str_replace($characterReplace, '', $headquarter->getPhone());
+            }
+
+            $headquarter->setPhone($phone);
+
             $repository->add($headquarter);
 
             $this->addFlash('success', sprintf('Sede creada correctamente'));

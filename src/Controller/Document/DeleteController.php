@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class DeleteController extends AbstractController
 {
-    #[Route('/document/remove/{id}', name: 'app_document_delete')]
+    #[Route('/document/remove/{id}', name: 'app_document_remove')]
     public function remove(
         Document $document,
         DocumentRepository $repository

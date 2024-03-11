@@ -122,6 +122,16 @@
                             <span class="hide-menu">Programas</span>
                         </a>
                     </li>
+                    {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ path('app_person_list') }}"
+                            aria-expanded="false">
+                                <i class="mdi mdi-account-multiple"></i>
+                                <span class="hide-menu">Beneficiarias</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="#"

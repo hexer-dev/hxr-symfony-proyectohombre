@@ -1,0 +1,64 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}Nueva Persona Beneficiaria{% endblock %}
+
+{% block content %}
+ <div class="row page-titles">
+    <div class="col-md-7 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Persona Beneficiaria</h3>
+    </div>
+    <div class="col-md-5 col-12 align-self-center">
+        <div class="d-flex mt-2 justify-content-end">
+            <div class="d-flex me-3 ms-2">
+                <div class="row button-group">
+                    <a href="{{ path('app_person_list') }}" title="Volver">                
+                      <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                              <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
+                      </button>   
+                    </a>                 
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+ <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Nueva Persona Beneficiaria</h4>
+
+                    {{ include('person/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery( document ).ready(function () {
+             jQuery('input#person_nif').on('change', function(e){ 
+                var value = jQuery(this).val();
+                if (nifValidate(value)) {
+                     jQuery('button#person_save').attr('disabled', false);
+                     if (jQuery(this).hasClass('is-invalid')) {
+                        jQuery(this).removeClass('is-invalid');
+                        jQuery(this).siblings('.invalid-feedback').html('');
+                     }
+                     return true;
+                } else {
+                    if (!jQuery(this).hasClass('is-invalid')) {
+                        jQuery(this).addClass('is-invalid');
+                        jQuery(this).siblings('.invalid-feedback').html('NIF no válido');
+                    }
+                    
+                }
+                jQuery('button#person_save').attr('disabled', true);
+             });
+        });
+    </script> 
+{% endblock %}
