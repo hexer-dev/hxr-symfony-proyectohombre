@@ -1,0 +1,22 @@
+                    {{ form_start(form) }}
+                        <div class="form-floating mb-3">
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            <label>                                
+                                {{ form_label(form.name) }}
+                            </label>
+                            <small class="form-control-feedback text-danger">
+                              {{ form_errors(form.name ,{'attr': {'class': 'has-danger'}}) }}
+                            </small>
+                        </div><div class="form-floating mb-3">
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                            <label>                        
+                                {{ form_label(form.description) }}
+                            </label>
+                            {{ form_errors(form.description) }}
+                        </div>
+                        <div class="d-md-flex align-items-center">                      
+                            <div class="mt-3 mt-md-0 ms-auto">
+                                {{  form_row(form.save, {'attr': {'class': 'btn btn-info font-weight-medium rounded-pill px-4'}}) }}
+                            </div>
+                        </div>
+                    {{ form_end(form) }}

@@ -112,8 +112,16 @@
                                 <i class="mdi mdi-account-multiple"></i>
                                 <span class="hide-menu">Profesionales</span>
                             </a>
-                        </li>
+                        </li>                        
                     {% endif %}
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ path('app_drug_list') }}"
+                            aria-expanded="false">
+                                <i class="mdi mdi-eyedropper"></i>
+                                <span class="hide-menu">Adicciones</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="{{ path('app_program_list') }}"
