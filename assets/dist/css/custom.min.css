@@ -1,1 +1,2 @@
 .no-visible {display: none;}
+label.required::after {content: '*';}

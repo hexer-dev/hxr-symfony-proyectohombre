@@ -10,13 +10,15 @@
     <div class="col-md-5 col-12 align-self-center">
         <div class="d-flex mt-2 justify-content-end">
             <div class="d-flex me-3 ms-2">
-                <div class="row button-group">
-                    <a href="{{ path('app_drug_add') }}" title="nuevo">                
-                      <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
-                              <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nueva
-                      </button>   
-                    </a>                 
-                </div>
+                {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+                    <div class="row button-group">
+                        <a href="{{ path('app_drug_add') }}" title="nuevo">                
+                        <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                                <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nueva
+                        </button>   
+                        </a>                 
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -29,7 +31,9 @@
                 <thead class="table-light">
                     <tr>
                         <th class="border-bottom border-top">Nombre</th>
-                        <th class="border-bottom border-top">Acciones</th>
+                        {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+                            <th class="border-bottom border-top">Acciones</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -41,22 +45,24 @@
                                 <span class="ms-3 fw-normal">{{ drug.name}}</span>
                             </div>
                         </td>
-                        <td>
-                        <div class="dropdown dropstart">
-                            <a href="#" class="link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i data-feather="more-horizontal" class="feather-sm"></i>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="{{ path('app_drug_edit',{'id': drug.id}) }}">Editar</a></li>                            
-                            <li><a class="dropdown-item" href="{{ path('app_drug_remove',{'id': drug.id}) }}">Eliminar</a></li>
-                            </ul>
-                        </div>
-                        </td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+                            <td>
+                                <div class="dropdown dropstart">
+                                    <a href="#" class="link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i data-feather="more-horizontal" class="feather-sm"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="{{ path('app_drug_edit',{'id': drug.id}) }}">Editar</a></li>                            
+                                    <li><a class="dropdown-item" href="{{ path('app_drug_remove',{'id': drug.id}) }}">Eliminar</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="5">No existen adicciones en la aplicación</td>
+                        <td colspan="2">No existen adicciones en la aplicación</td>
                     </tr>
                 {% endif %}
                 </tbody>

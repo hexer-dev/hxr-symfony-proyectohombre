@@ -45,6 +45,9 @@ class Document
     #[ORM\ManyToOne(inversedBy: 'documents')]
     private ?Program $program = null;
 
+    #[ORM\ManyToOne(inversedBy: 'documents')]
+    private ?Person $person = null;
+
     public function __construct()
     {
         $currentDate = new \DateTime('NOW');
@@ -161,6 +164,18 @@ class Document
     public function setProgram(?Program $program): static
     {
         $this->program = $program;
+
+        return $this;
+    }
+
+    public function getPerson(): ?Person
+    {
+        return $this->person;
+    }
+
+    public function setPerson(?Person $person): static
+    {
+        $this->person = $person;
 
         return $this;
     }

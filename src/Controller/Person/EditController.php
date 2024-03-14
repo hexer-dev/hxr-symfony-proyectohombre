@@ -6,6 +6,7 @@ use App\Entity\Person;
 use App\Form\PersonType;
 use App\Repository\PersonRepository;
 use App\Security\Voter\PersonVoter;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,27 +22,37 @@ class EditController extends AbstractController
     ): Response {
         $this->denyAccessUnlessGranted(PersonVoter::EDIT, $person);
 
-        $form = $this->createForm(PersonType::class, $person);
+        $personDataBBDD = $repository->find($person->getId());
+        $currentNif = $personDataBBDD->getNif();
+
+        $form = $this->createForm(PersonType::class, $person, [
+            'headquarter' => $person->getHeadquarter()
+        ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $person = $form->getData();
             $headquarter = $person->getHeadquarter();
 
             $characterReplace = array(' ', '-', '.');
 
             $nif = str_replace($characterReplace, '', $person->getNif());
+            
+            $nifHasChanged = ($currentNif != $nif) ? true : false;
 
-            $listPerson = $repository->findByNifAndHeadquarter($nif, $headquarter);
+            if ($nifHasChanged) {
+                $listPerson = $repository->findByNifAndHeadquarter($nif, $headquarter);
 
-            $existPerson = (null === $listPerson || count($listPerson) == 0) ? false : true;
-
-            if ($existPerson) {
-                $this->addFlash('danger', sprintf('Ya existe una persona beneficiaria con NIF: %s. Los cambios en la persona no se han realizado', $nif));
-
-                return $this->redirectToRoute('app_person_list');
-            }
+                $existPerson = (null === $listPerson || count($listPerson) == 0) ? false : true;
+    
+                if ($existPerson) {
+                    $this->addFlash('danger', sprintf('Ya existe una persona beneficiaria con NIF: %s. Los cambios en la persona no se han realizado', $nif));
+    
+                    return $this->redirectToRoute('app_person_list');
+                }
+            }            
 
             $phone = null;
             if (
@@ -51,8 +62,17 @@ class EditController extends AbstractController
                 $phone = str_replace($characterReplace, '', $person->getPhone());
             }
 
+            $contactPhone = null;
+            if (
+                null !== $person->getContactPhone()
+                && !empty($person->getContactPhone())
+            ) {
+                $contactPhone = str_replace($characterReplace, '', $person->getContactPhone());
+            }
+
             $person->setNif($nif);
             $person->setPhone($phone);
+            $person->setContactPhone($contactPhone);
 
             try {
                 $repository->add($person);

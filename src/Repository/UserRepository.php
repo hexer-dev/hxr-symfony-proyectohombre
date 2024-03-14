@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Headquarter;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -83,6 +84,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function managerOfHeadquarter(Headquarter $headquarter)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
+            ->andWhere(
+                $qb->expr()->eq('u.headquarter', ':headquarter')
+            )
+            ->setParameter('headquarter', $headquarter);
     }
 
 //    /**

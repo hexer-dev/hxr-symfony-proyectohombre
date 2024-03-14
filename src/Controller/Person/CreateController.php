@@ -21,7 +21,9 @@ class CreateController extends AbstractController
         Request $request
     ): Response {
         $currentUser = $this->getUser();
+
         $person = new Person();
+        $person->setCreatedBy($currentUser);
 
         $this->denyAccessUnlessGranted(PersonVoter::ADD, $person);
 
@@ -56,9 +58,18 @@ class CreateController extends AbstractController
                 $phone = str_replace($characterReplace, '', $person->getPhone());
             }
 
+            $contactPhone = null;
+            if (
+                null !== $person->getContactPhone()
+                && !empty($person->getContactPhone())
+            ) {
+                $contactPhone = str_replace($characterReplace, '', $person->getContactPhone());
+            }
+
             $person->setHeadquarter($headquarter);
             $person->setNif($nif);
             $person->setPhone($phone);
+            $person->setContactPhone($contactPhone);
 
             try {
                 $repository->add($person);
