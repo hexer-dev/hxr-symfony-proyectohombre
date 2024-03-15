@@ -103,7 +103,7 @@ class Person
 
     public function __toString()
     {
-        return sprintf("%, %", $this->getLastname(), $this->getName());
+        return sprintf("%s, %s", $this->getLastname(), $this->getName());
     }
 
     public function getId(): ?int

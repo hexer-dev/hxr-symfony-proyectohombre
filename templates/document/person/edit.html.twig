@@ -11,7 +11,7 @@
         <div class="d-flex mt-2 justify-content-end">
             <div class="d-flex me-3 ms-2">
                 <div class="row button-group">
-                    <a href="{{ path('app_program_edit', {'id': entity.program.id }) }}" title="Volver">                
+                    <a href="{{ path('app_person_edit', {'id': entity.person.id }) }}" title="Volver">                
                       <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
                               <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
                       </button>   
@@ -27,8 +27,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Editar Documento asociado al programa <b>{{ entity.program.name }}</b></h4>
-
+                    <h4 class="card-title">Editar Documento asociado a <b>{{ entity.person.name ~ ' ' ~ entity.person.lastname }}</b></h4>
                     {{ include('document/_form.html.twig') }}
                 </div>
             </div>

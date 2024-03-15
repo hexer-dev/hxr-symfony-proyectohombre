@@ -24,6 +24,8 @@ class PersonType extends AbstractType
     {
         $entity = $builder->getData();
 
+        $dataTypeValue = (null === $entity->getId()) ? 'BENEFICIARY' : $entity->getType();
+
         $currentDate = new \DateTime();
 
         $builder
@@ -64,7 +66,8 @@ class PersonType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'label' => 'Tipo',
                 'choices' => array_flip(Person::TYPE),
-                'required' => true
+                'required' => true,
+                'data' => $dataTypeValue
             ])
             ->add('nationality', TextType::class, [
                 'label' => 'Nacionalidad',
@@ -105,7 +108,6 @@ class PersonType extends AbstractType
                     'expanded' => false
                 ]);
         }
-
 
         $builder
             ->add('save', SubmitType::class, [

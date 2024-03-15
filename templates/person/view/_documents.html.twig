@@ -1,3 +1,17 @@
+
+<div class="row">
+    <div class="col-12 text-end d-flex justify-content-md-end justify-content-center">
+        {% if is_granted('ROLE_MANAGER') %}
+            <div class="row button-group">
+                <a href="{{ path('app_person_document_add', {'id': person.id }) }}" title="nuevo">                
+                    <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                        <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nuevo Documento
+                    </button>   
+                </a>                 
+            </div>
+        {% endif %}            
+    </div>
+</div>
 <div class="table-responsive table-responsive-document">
     <table id="datatable-documents" class="table display table-bordered table-striped no-wrap">
         <thead>
@@ -8,25 +22,33 @@
             </tr>
         </thead>
         <tbody>
-            {#% if program.documents is defined  and program.documents|length > 0 %}
-                {% for document in program.documents %}
+            {% if person.documents is defined  and person.documents|length > 0 %}
+                {% for document in person.documents %}
                     <tr>
                         <td>{{ document.name }}</td>
                         <td>{{ document.year }}</td>
                         <td>
                             <div class="action-btn">                                                                                         
-                                <a href="{{ path('app_document_view_program', {'id': document.id }) }}" class="text-info edit">
+                                <a href="{{ path('app_document_view_person', {'id': document.id }) }}" class="text-info view">
                                     <i data-feather="eye" class="feather-sm fill-white"></i>
                                 </a>
+                                {% if is_granted('ROLE_MANAGER') %}
+                                    <a href="{{ path('app_person_document_edit', {'id': document.id }) }}" class="text-primary edit">
+                                        <i data-feather="edit" class="feather-sm fill-white"></i>
+                                    </a>   
+                                    <a href="{{ path('app_person_document_remove', {'id': document.id }) }}" class="text-dark delete ms-2">
+                                        <i data-feather="trash-2" class="feather-sm fill-white"></i>
+                                    </a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="3">No existen documentos para este programa</td>
+                    <td colspan="3">No existen documentos para esta pesona</td>
                 </tr>
-            {% endif %#}
+            {% endif %}
         </tbody>
     </table>
 </div>

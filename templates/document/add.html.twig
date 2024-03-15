@@ -12,9 +12,11 @@
             <div class="d-flex me-3 ms-2">
                 <div class="row button-group">
                     {% if program is defined %}
-                        <a href="{{ path('app_program_edit', {'id': program.id}) }}" title="nuevo">                
+                        <a href="{{ path('app_program_edit', {'id': program.id}) }}" title="volver">                
+                    {% elseif person is defined %}
+                        <a href="{{ path('app_person_edit', {'id': person.id}) }}" title="volver">
                     {% else %}
-                        <a href="{{ path('app_document_list') }}" title="nuevo">                
+                        <a href="{{ path('app_document_list') }}" title="volver">                
                     {% endif %}                    
                       <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
                               <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
@@ -31,7 +33,14 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Nuevo Documento</h4>
+                    <h4 class="card-title">
+                        Nuevo Documento 
+                        {% if program is defined %}
+                            - Programa {{ program.name }}
+                        {% elseif person is defined %}
+                            de {{ person.name ~ ' ' ~ person.lastname }}
+                        {% endif %}
+                    </h4>
 
                     {{ include('document/_form.html.twig') }}
                 </div>
@@ -54,7 +63,6 @@
 
                 jQuery(divVisible).removeClass('no-visible');
             });
-        }); 
-        
+        });         
     </script>
   {% endblock %}

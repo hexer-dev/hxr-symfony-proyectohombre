@@ -5,7 +5,7 @@
 {% block content %}
  <div class="row page-titles">
     <div class="col-md-7 col-12 align-self-center">
-        <h3 class="text-themecolor mb-0">Persona {{ person.name }}</h3>
+        <h3 class="text-themecolor mb-0">Persona {{ person.name ~ ' ' ~ person.lastname }}</h3>
     </div>
     <div class="col-md-5 col-12 align-self-center">
         <div class="d-flex mt-2 justify-content-end">
@@ -20,8 +20,6 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Información de la presona</h4>
-
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link d-flex active" data-bs-toggle="tab" href="#setting" role="tab">
@@ -65,7 +63,7 @@
 
 {% block footer_javascripts %}
     {{ parent() }}
-    {#% if program.documents is defined  and program.documents|length > 0 %}
+    {% if person.documents is defined  and person.documents|length > 0 %}
       <script type="text/javascript">
           jQuery( document ).ready(function () {
               if (jQuery('#datatable-documents').length > 0 ){                            
@@ -78,5 +76,5 @@
               }    
           });
       </script>
-    {% endif %#}
+    {% endif %}
   {% endblock %}

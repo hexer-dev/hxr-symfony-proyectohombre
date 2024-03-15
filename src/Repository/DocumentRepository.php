@@ -43,7 +43,8 @@ class DocumentRepository extends ServiceEntityRepository
             ->where(
                 $qb->expr()->andX(
                     $qb->expr()->isNull('d.headquarter'),
-                    $qb->expr()->isNull('d.program')
+                    $qb->expr()->isNull('d.program'),
+                    $qb->expr()->isNull('d.person')
                 )
             )
             ->getQuery()
@@ -59,7 +60,8 @@ class DocumentRepository extends ServiceEntityRepository
             ->where(
                 $qb->expr()->andX(
                     $qb->expr()->eq('d.headquarter', ':headquarter'),
-                    $qb->expr()->isNull('d.program')
+                    $qb->expr()->isNull('d.program'),
+                    $qb->expr()->isNull('d.person')
                 )
             )
             ->setParameter('headquarter', $headquarter)
@@ -76,7 +78,8 @@ class DocumentRepository extends ServiceEntityRepository
             ->where(
                 $qb->expr()->andX(
                     $qb->expr()->eq('d.headquarter', ':headquarter'),
-                    $qb->expr()->eq('d.program', ':program')
+                    $qb->expr()->eq('d.program', ':program'),
+                    $qb->expr()->isNull('d.person')
                 )
             )
             ->setParameter('headquarter', $headquarter)

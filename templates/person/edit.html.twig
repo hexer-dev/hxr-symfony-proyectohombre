@@ -60,9 +60,7 @@
                 jQuery('button#person_save').attr('disabled', true);
              });
         });
-    </script>
-    {#% if program.documents is defined  and program.documents|length > 0 %}
-        <script type="text/javascript">
+        {% if person.documents is defined  and person.documents|length > 0 %}
             jQuery( document ).ready(function () {
                 if (jQuery('#datatable-documents').length > 0 ){                            
                     jQuery("#datatable-documents").DataTable({
@@ -73,6 +71,6 @@
                     });
                 }    
             });
-        </script>
-    {% endif %#} 
+        {% endif %}
+    </script>
 {% endblock %}

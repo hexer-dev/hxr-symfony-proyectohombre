@@ -56,7 +56,7 @@ class EditController extends AbstractController
 
                     /*eliminamos el antiguo*/
                     if (null !== $document->getFile()) {
-                        $fileRemove = $document->getPath() . $document->getFile();
+                        $fileRemove = $document->getPath() . '/' . $document->getFile();
 
                         if (file_exists($fileRemove) && is_file($fileRemove)) {
                             unlink($fileRemove);
