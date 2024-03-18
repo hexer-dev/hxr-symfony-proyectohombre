@@ -47,6 +47,20 @@ class ProgramRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function managerProgramsQuery(Headquarter $headquarter)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->where(
+                $qb->expr()->eq('p.headquarter', ':headquarter'),
+            )
+            ->setParameter('headquarter', $headquarter)
+        ;
+
+        return $qb;
+    }
     
 
 //    /**

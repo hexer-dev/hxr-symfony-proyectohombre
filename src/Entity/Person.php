@@ -94,11 +94,15 @@ class Person
     #[ORM\OneToMany(targetEntity: Document::class, mappedBy: 'person')]
     private Collection $documents;
 
+    #[ORM\OneToMany(targetEntity: PersonInProgram::class, mappedBy: 'person')]
+    private Collection $programs;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime('NOW'));
         $this->setHomeless(false);
         $this->documents = new ArrayCollection();
+        $this->programs = new ArrayCollection();
     }
 
     public function __toString()
@@ -327,6 +331,36 @@ class Person
             // set the owning side to null (unless already changed)
             if ($document->getPerson() === $this) {
                 $document->setPerson(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonInProgram>
+     */
+    public function getPrograms(): Collection
+    {
+        return $this->programs;
+    }
+
+    public function addPrograms(PersonInProgram $personInProgram): static
+    {
+        if (!$this->programs->contains($personInProgram)) {
+            $this->programs->add($personInProgram);
+            $personInProgram->setPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrograms(PersonInProgram $personInProgram): static
+    {
+        if ($this->programs->removeElement($personInProgram)) {
+            // set the owning side to null (unless already changed)
+            if ($personInProgram->getPerson() === $this) {
+                $personInProgram->setPerson(null);
             }
         }
 

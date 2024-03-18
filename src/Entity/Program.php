@@ -41,9 +41,18 @@ class Program
     #[ORM\OneToMany(targetEntity: Document::class, mappedBy: 'program')]
     private Collection $documents;
 
+    #[ORM\OneToMany(targetEntity: PersonInProgram::class, mappedBy: 'program')]
+    private Collection $people;
+
     public function __construct()
     {
         $this->documents = new ArrayCollection();
+        $this->people = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     public function getId(): ?int
@@ -147,6 +156,36 @@ class Program
             // set the owning side to null (unless already changed)
             if ($document->getProgram() === $this) {
                 $document->setProgram(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonInProgram>
+     */
+    public function getPeople(): Collection
+    {
+        return $this->people;
+    }
+
+    public function addPeople(PersonInProgram $personInProgram): static
+    {
+        if (!$this->people->contains($personInProgram)) {
+            $this->people->add($personInProgram);
+            $personInProgram->setProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removePeople(PersonInProgram $personInProgram): static
+    {
+        if ($this->people->removeElement($personInProgram)) {
+            // set the owning side to null (unless already changed)
+            if ($personInProgram->getProgram() === $this) {
+                $personInProgram->setProgram(null);
             }
         }
 

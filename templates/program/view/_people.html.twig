@@ -2,7 +2,7 @@
     <div class="col-12 text-end d-flex justify-content-md-end justify-content-center">
         {% if is_granted('ROLE_MANAGER') %}
             <div class="row button-group">
-                <a href="{{ path('app_person_program_add', {'id': person.id }) }}" title="nuevo">                
+                <a href="{{ path('app_program_person_add', {'id': program.id }) }}" title="nuevo">                
                     <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
                         <i data-feather="plus" class="feather-sm fill-white me-2"></i>Asociar a un programa
                     </button>   
@@ -12,43 +12,41 @@
     </div>
 </div>
 <div class="table-responsive table-responsive-document">
-    <table id="datatable-programs" class="table display table-bordered table-striped no-wrap">
+    <table id="datatable-people" class="table display table-bordered table-striped no-wrap">
         <thead>
             <tr>
-                <th>Código</th>
+                <th>NIF</th>
                 <th>Nombre</th>
-                <th>Comienzo</th>
-                <th>Fin</th>
-                {% if not is_granted('ROLE_CONSULTANT') %}
-                    <th>Acciones</th>
-                {% endif %}                
+                <th>Apellido</th>
+                <th>Adicción</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% if person.programs is defined  and person.programs|length > 0 %}
-                {% for program in person.programs %}
+            {% if program.people is defined  and program.people|length > 0 %}
+                {% for person in program.people %}
                     <tr>
-                        <td>{{ program.program.code }}</td>
-                        <td>{{ program.program.name }}</td>
-                        <td>{{ program.program.datestart|date('d/m/Y', 'Europe/Madrid') }}</td>
-                        <td>{{ program.program.dateend|date('d/m/Y', 'Europe/Madrid')  }}</td>
+                        <td>{{ person.person.nif }}</td>
+                        <td>{{ person.person.name }}</td>
+                        <td>{{ person.person.lastname }}</td>
+                        <td>{{ person.person.drug.name }}</td>
                         <td>
                             <div class="action-btn">                                                                                         
-                                <a href="{#{ path('app_timetable_view_person', {'id': program.program.id }) }#}" class="text-info view" title="Ver registros">
+                                 <a href="{#{ path('app_timetable_view_person', {'id': program.id }) }#}" class="text-info view" title="Ver registros">
                                     <i data-feather="clock" class="feather-sm fill-white"></i>
                                 </a>                                
                                 {% if not is_granted('ROLE_CONSULTANT') %}
-                                    <a href="{{ path('app_person_program_remove', {'id': program.program.id }) }}" class="text-dark delete ms-2">
+                                    <a href="{{ path('app_person_program_remove', {'id': program.id }) }}" class="text-dark delete ms-2">
                                         <i data-feather="trash-2" class="feather-sm fill-white"></i>
                                     </a>   
-                                {% endif %}                        
-                            </div>                                
+                                {% endif %}
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="5">No existen programas asociados a esta persona</td>
+                    <td colspan="5">No existen personas beneficiarias para este programa</td>
                 </tr>
             {% endif %}
         </tbody>

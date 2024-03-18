@@ -62,9 +62,9 @@
 {% endblock %}
 
 {% block footer_javascripts %}
-    {{ parent() }}
-    {% if person.documents is defined  and person.documents|length > 0 %}
-      <script type="text/javascript">
+    {{ parent() }}    
+    <script type="text/javascript">
+      {% if person.documents is defined  and person.documents|length > 0 %}
           jQuery( document ).ready(function () {
               if (jQuery('#datatable-documents').length > 0 ){                            
                   jQuery("#datatable-documents").DataTable({
@@ -75,6 +75,18 @@
                   });
               }    
           });
-      </script>
-    {% endif %}
+        {% endif %}
+        {% if person.programs is defined  and person.programs|length > 0 %}
+          jQuery( document ).ready(function () {
+              if (jQuery('#datatable-programs').length > 0 ){                            
+                  jQuery("#datatable-programs").DataTable({
+                      responsive: true,
+                      language: {
+                      url: "{{ asset('dist/js/datatables_i18n_es-ES.json') }}"
+                      }
+                  });
+              }    
+          });
+        {% endif %}
+    </script>    
   {% endblock %}

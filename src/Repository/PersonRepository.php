@@ -28,7 +28,8 @@ class PersonRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function remove(Person $person){
+    public function remove(Person $person)
+    {
         $this->getEntityManager()->remove($person);
         $this->getEntityManager()->flush();
     }
@@ -47,32 +48,44 @@ class PersonRepository extends ServiceEntityRepository
             ->setParameter('nif', $nif)
             ->setParameter('headquarter', $headquarter)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
-//    /**
-//     * @return Person[] Returns an array of Person objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function personInHeadquarter(Headquarter $headquarter)
+    {
+        $qb = $this->createQueryBuilder('p');
 
-//    public function findOneBySomeField($value): ?Person
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $qb
+            ->andWhere(
+                $qb->expr()->eq('p.headquarter', ':headquarter')
+            )
+            ->setParameter('headquarter', $headquarter)
+            ->getQuery()
+            ->getResult();
+    }
+
+    //    /**
+    //     * @return Person[] Returns an array of Person objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Person
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

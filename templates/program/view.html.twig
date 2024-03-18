@@ -35,6 +35,14 @@
                         <span class="d-none d-md-block ms-2">Documentos</span>
                     </a>
                 </li>
+                {% if not is_granted('ROLE_ADMIN') %}
+                  <li class="nav-item">
+                      <a class="nav-link d-flex" data-bs-toggle="tab" href="#people" role="tab">
+                          <span><i class="ti-user"></i></span>
+                          <span class="d-none d-md-block ms-2">P. Beneficiarias</span>
+                      </a>
+                  </li>
+                {% endif %}
             </ul>            
             <!-- Tab panes -->
             <div class="tab-content">
@@ -44,6 +52,11 @@
               <div class="tab-pane p-3" id="documents" role="tabpanel">
                  {{ include('program/view/_documents.html.twig') }}
               </div>
+              {% if not is_granted('ROLE_ADMIN') %}
+                <div class="tab-pane p-3" id="people" role="tabpanel">
+                  {{ include('program/view/_people.html.twig') }}
+                </div>  
+              {% endif %}              
             </div>
             <!-- end tab -->
           </div>          
@@ -55,9 +68,9 @@
 {% endblock %}
 
 {% block footer_javascripts %}
-    {{ parent() }}
-    {% if program.documents is defined  and program.documents|length > 0 %}
-      <script type="text/javascript">
+    {{ parent() }}    
+    <script type="text/javascript">
+        {% if program.documents is defined  and program.documents|length > 0 %}
           jQuery( document ).ready(function () {
               if (jQuery('#datatable-documents').length > 0 ){                            
                   jQuery("#datatable-documents").DataTable({
@@ -68,6 +81,18 @@
                   });
               }    
           });
-      </script>
-    {% endif %}
+        {% endif %}
+        {% if program.people is defined  and program.people|length > 0  and not is_granted('ROLE_ADMIN') %}
+          jQuery( document ).ready(function () {
+              if (jQuery('#datatable-people').length > 0 ){                            
+                  jQuery("#datatable-people").DataTable({
+                      responsive: true,
+                      language: {
+                      url: "{{ asset('dist/js/datatables_i18n_es-ES.json') }}"
+                      }
+                  });
+              }    
+          });
+        {% endif %}
+      </script>    
   {% endblock %}
