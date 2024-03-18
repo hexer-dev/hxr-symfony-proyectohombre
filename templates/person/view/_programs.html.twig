@@ -34,11 +34,14 @@
                         <td>{{ program.program.dateend|date('d/m/Y', 'Europe/Madrid')  }}</td>
                         <td>
                             <div class="action-btn">                                                                                         
-                                <a href="{#{ path('app_timetable_view_person', {'id': program.program.id }) }#}" class="text-info view" title="Ver registros">
+                                <a href="{#{ path('app_timetable_view_person', {'id': program.id }) }#}" class="text-info view" title="Ver registros">
                                     <i data-feather="clock" class="feather-sm fill-white"></i>
                                 </a>                                
                                 {% if not is_granted('ROLE_CONSULTANT') %}
-                                    <a href="{{ path('app_person_program_remove', {'id': program.program.id }) }}" class="text-dark delete ms-2">
+                                    <a href="{{ path('app_person_program_edit', {'id': program.id }) }}" class="text-primary edit">
+                                        <i data-feather="edit" class="feather-sm fill-white"></i>
+                                    </a>  
+                                    <a href="{{ path('app_person_program_remove', {'id': program.id }) }}" class="text-dark delete ms-2">
                                         <i data-feather="trash-2" class="feather-sm fill-white"></i>
                                     </a>   
                                 {% endif %}                        

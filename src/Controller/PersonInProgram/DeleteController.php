@@ -19,11 +19,16 @@ class DeleteController extends AbstractController
         Request $request
     ): Response {
         $urlReferer = $request->server->get('HTTP_REFERER');
+
+        $program = $personInProgram->getProgram();
+
         $person = $personInProgram->getPerson();
 
         $this->denyAccessUnlessGranted(PersonVoter::DELETE, $person);
 
         $respository->remove($personInProgram);
+
+        $this->addFlash('success', sprintf("Se ha eliminado correctamen la pesona %s asociada al program %s", $person->__toString(), $program->getName()));
 
         return $this->redirect($urlReferer);
     }

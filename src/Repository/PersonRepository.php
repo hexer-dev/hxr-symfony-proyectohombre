@@ -4,7 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Headquarter;
 use App\Entity\Person;
+use App\Entity\PersonInProgram;
+use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -51,17 +54,44 @@ class PersonRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function personInHeadquarter(Headquarter $headquarter)
-    {
+    public function personInHeadquarterWithoutProgram(Headquarter $headquarter, Program $program)
+    {        
+        /*$subquery = $this->getEntityManager()
+            ->getRepository(PersonInProgram::class)
+            ->createQueryBuilder('pp');
+        $subquery
+            ->select('pp.person')
+            ->andWhere(
+                $subquery->expr()->eq('pp.program', ':program')
+            )                
+            ->setParameter('program', $program)
+        ;
+        
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->andWhere(
+                $qb->expr()->eq('p.headquarter', ':headquarter'),                
+                $qb->expr()->not(
+                    $qb->expr()->exists(
+                        $subquery->getDQL()
+                    )
+                )
+            )
+            ->setParameter('headquarter', $headquarter)
+
+            return $qb;
+        ; */       
+
         $qb = $this->createQueryBuilder('p');
 
         return $qb
             ->andWhere(
-                $qb->expr()->eq('p.headquarter', ':headquarter')
+                $qb->expr()->andX(
+                    $qb->expr()->eq('p.headquarter', ':headquarter'),
+                )                
             )
             ->setParameter('headquarter', $headquarter)
-            ->getQuery()
-            ->getResult();
+        ;        
     }
 
     //    /**

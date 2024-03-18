@@ -1,21 +1,33 @@
 {% extends 'app.html.twig' %}
 
-{% block title %}Nueva Persona Beneficiaria{% endblock %}
+{% block title %}Nueva asociación a programa{% endblock %}
 
 {% block content %}
  <div class="row page-titles">
     <div class="col-md-7 col-12 align-self-center">
-        <h3 class="text-themecolor mb-0">Persona Beneficiaria {{ person.name ~ ' ' ~ person.lastname }}</h3>
+        {% if person is defined %}
+            <h3 class="text-themecolor mb-0">Persona Beneficiaria {{ person.name ~ ' ' ~ person.lastname }}</h3>
+        {% else %}
+            <h3 class="text-themecolor mb-0">Programa {{ program.name }}</h3>
+        {% endif %}
     </div>
     <div class="col-md-5 col-12 align-self-center">
         <div class="d-flex mt-2 justify-content-end">
             <div class="d-flex me-3 ms-2">
                 <div class="row button-group">
-                    <a href="{{ path('app_person_view', {'id': person.id}) }}" title="Volver">                
-                      <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
-                              <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
-                      </button>   
-                    </a>                 
+                    {% if person is defined %}
+                        <a href="{{ path('app_person_view', {'id': person.id}) }}" title="Volver">                
+                            <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                                    <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
+                            </button>   
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_program_view', {'id': program.id}) }}" title="Volver">                
+                            <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                                    <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
+                            </button>   
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

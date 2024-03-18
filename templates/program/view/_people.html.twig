@@ -4,7 +4,7 @@
             <div class="row button-group">
                 <a href="{{ path('app_program_person_add', {'id': program.id }) }}" title="nuevo">                
                     <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
-                        <i data-feather="plus" class="feather-sm fill-white me-2"></i>Asociar a un programa
+                        <i data-feather="plus" class="feather-sm fill-white me-2"></i>Asociar una persona
                     </button>   
                 </a>                 
             </div>
@@ -36,7 +36,10 @@
                                     <i data-feather="clock" class="feather-sm fill-white"></i>
                                 </a>                                
                                 {% if not is_granted('ROLE_CONSULTANT') %}
-                                    <a href="{{ path('app_person_program_remove', {'id': program.id }) }}" class="text-dark delete ms-2">
+                                    <a href="{{ path('app_person_program_edit', {'id': person.id }) }}" class="text-primary edit">
+                                        <i data-feather="edit" class="feather-sm fill-white"></i>
+                                    </a>  
+                                    <a href="{{ path('app_person_program_remove', {'id': person.id }) }}" class="text-dark delete ms-2">
                                         <i data-feather="trash-2" class="feather-sm fill-white"></i>
                                     </a>   
                                 {% endif %}

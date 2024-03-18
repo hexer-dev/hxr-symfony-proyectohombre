@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class CreateFromPersonController extends AbstractController
 {
     #[Route('/person/program/add/{id}', name: 'app_person_program_add')]
-    public function add(
+    public function addPerson(
         Person $person,
         PersonInProgramRepository $respository,
         Request $request
@@ -47,7 +47,7 @@ class CreateFromPersonController extends AbstractController
                 $this->addFlash('danger', sprintf('Ya existe la persona beneficiaria %s asociada a ese programa: %s', $person->__toString(), $program->getName()));
 
                 return $this->redirectToRoute('app_person_view', [
-                    'id' => $person
+                    'id' => $person->getId()
                 ]);
             }
 
@@ -60,7 +60,7 @@ class CreateFromPersonController extends AbstractController
             $this->addFlash('success', sprintf('Persona asociada al programa correctamente'));
 
             return $this->redirectToRoute('app_person_view', [
-                'id' => $person
+                'id' => $person->getId()
             ]);
         } else if ($form->isSubmitted()) {
             $this->addFlash('danger', sprintf("Hay errores en el formulario y no ha sido posible asociar la persona al programa"));
