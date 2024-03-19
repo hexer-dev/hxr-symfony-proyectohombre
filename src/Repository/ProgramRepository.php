@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Headquarter;
 use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,15 +35,35 @@ class ProgramRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    public function allProgramsActived()
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $now = new \DateTime('NOW');
+
+        return $qb
+            ->andWhere(
+                $qb->expr()->gte('p.date_end', ':now')
+            )
+            ->setParameter('now', $now->format('Y-m-d'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function managerPrograms(Headquarter $headquarter): array
     {
         $qb = $this->createQueryBuilder('p');
 
         return $qb
             ->where(
-                $qb->expr()->eq('p.headquarter', ':headquarter'),
+                $qb->expr()->andX(
+                    $qb->expr()->eq('p.headquarter', ':headquarter'),
+                    $qb->expr()->gte('p.date_end', ':dateEnd')
+                )
             )
             ->setParameter('headquarter', $headquarter)
+            ->setParameter('dateEnd', new \DateTime('NOW'))
             ->getQuery()
             ->getResult()
         ;
@@ -54,13 +75,52 @@ class ProgramRepository extends ServiceEntityRepository
 
         $qb
             ->where(
-                $qb->expr()->eq('p.headquarter', ':headquarter'),
+                $qb->expr()->andX(
+                    $qb->expr()->eq('p.headquarter', ':headquarter'),
+                    $qb->expr()->gte('p.date_end', ':dateEnd')
+                )
             )
             ->setParameter('headquarter', $headquarter)
+            ->setParameter('dateEnd', new \DateTime('NOW'))
         ;
 
         return $qb;
     }
+
+    public function allProgramsFinished()
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $now = new \DateTime('NOW');
+
+        return $qb
+            ->andWhere(
+                $qb->expr()->lte('p.date_end', ':now')
+            )
+            ->setParameter('now', $now->format('Y-m-d'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function managerProgramsFinished(Headquarter $headquarter): array
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        return $qb
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('p.headquarter', ':headquarter'),
+                    $qb->expr()->lte('p.date_end', ':dateEnd')
+                )
+            )
+            ->setParameter('headquarter', $headquarter)
+            ->setParameter('dateEnd', new \DateTime('NOW'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     
 
 //    /**

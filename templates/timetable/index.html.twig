@@ -1,0 +1,106 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}Registros de tiempos{% endblock %}
+
+{% block content %}
+{% set now = "now"|date('d/m/Y', 'Europe/Madrid') %}
+
+ <div class="row page-titles">
+    <div class="col-md-7 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Registros de tiempos</h3>
+        <h6 class="card-subtitle mb-2 mt-2 text-muted d-flex align-items-center">
+            {{ personInProgram.person.name ~ ' ' ~ personInProgram.person.lastname }}<br/>
+            {{ personInProgram.program.name }}
+        </h6>
+    </div>
+    <div class="col-md-5 col-12 align-self-center">
+        <div class="d-flex mt-2 justify-content-end">
+            <div class="d-flex me-3 ms-2">
+            {% if not personInProgram.hasOpenTimetable and 
+                  now < personInProgram.program.dateend|date('d/m/Y', 'Europe/Madrid') 
+                  and not is_granted('ROLE_CONSULTANT') %}
+                <div class="row button-group">
+                    <a href="{{ path('app_person_program_timetable_add', {'id': personInProgram.id }) }}" title="nuevo">                
+                      <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                              <i data-feather="plus" class="feather-sm fill-white me-2"></i>Añadir registro
+                      </button>   
+                    </a>                 
+                </div>
+            {% endif %}                
+            </div>
+        </div>
+    </div>
+ </div>
+
+ <div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Entradas/Salidas</h4>
+            <div class="table-responsive table-responsive-document">
+                <table id="datatable-timetables" class="table display table-bordered table-striped no-wrap">
+                    <thead>
+                        <tr>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            {% if not is_granted('ROLE_CONSULTANT') %}
+                                <th>Acciones</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if personInProgram.timetables is defined  and personInProgram.timetables|length > 0 %}
+                            {% for timetable in personInProgram.timetables %}
+                                {% set isOpen = timetable.isOpen %}
+                                <tr>
+                                    <td>{{ timetable.dateStart|date('d/m/Y') }}</td>
+                                    <td>{{ (null != timetable.dateEnd) ? timetable.dateEnd|date('d/m/Y') : '---' }}</td>
+                                    {% if  now < personInProgram.program.dateend|date('d/m/Y', 'Europe/Madrid') and not is_granted('ROLE_CONSULTANT') %}
+                                        <td>
+                                            <div class="action-btn">
+                                                {% if isOpen %}
+                                                    <a href="{{ path('app_person_program_timetable_edit', { 'id': timetable.id}) }}" class="text-dark delete ms-2" title="marcar salida">
+                                                        <i data-feather="power" class="feather-sm fill-white"></i>
+                                                    </a> 
+                                                {% endif %}
+                                                <a href="{{ path('app_person_program_timetable_remove', {'id': timetable.id }) }}" class="text-dark delete ms-2">
+                                                    <i data-feather="trash-2" class="feather-sm fill-white"></i>
+                                                </a>   
+                                            </div>
+                                        </td>
+                                    {% elseif not is_granted('ROLE_CONSULTANT') %}
+                                        <td>---</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            {% if is_granted('ROLE_CONSULTANT') %}
+                                <td colspan="2">No existen registros de tiempos</td>
+                            {% else %}
+                                <td colspan="3">No existen Registros de tiempos</td>
+                            {% endif %}                        
+                        {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer_javascripts %}
+    {{ parent() }}    
+    {% if personInProgram.timetables is defined  and personInProgram.timetables|length > 0 %}
+        <script type="text/javascript">        
+            jQuery( document ).ready(function () {
+                if (jQuery('#datatable-timetables').length > 0 ){                            
+                    jQuery("#datatable-timetables").DataTable({
+                        responsive: true,
+                        language: {
+                        url: "{{ asset('dist/js/datatables_i18n_es-ES.json') }}"
+                        }
+                    });
+                }    
+            });
+        </script>
+    {% endif %}
+{% endblock %}

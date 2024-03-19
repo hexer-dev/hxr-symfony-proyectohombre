@@ -101,4 +101,17 @@ class PersonInProgram
 
         return $this;
     }
+
+    public function hasOpenTimetable()
+    {
+        $timetables = $this->getTimetables();
+
+        foreach ($timetables as $timetable) {
+            if ($timetable->isOpen()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -113,4 +113,15 @@ class Timetable
 
         return $this;
     }
+
+    public function isOpen()
+    {
+        if (
+            $this->getDateEnd() === null
+            && $this->getDateStart() !== null
+        ) {
+            return true;
+        }
+        return false;
+    }
 }

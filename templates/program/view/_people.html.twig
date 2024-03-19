@@ -23,6 +23,7 @@
             </tr>
         </thead>
         <tbody>
+            {% set now = "now"|date('d/m/Y', 'Europe/Madrid') %}
             {% if program.people is defined  and program.people|length > 0 %}
                 {% for person in program.people %}
                     <tr>
@@ -32,10 +33,10 @@
                         <td>{{ person.person.drug.name }}</td>
                         <td>
                             <div class="action-btn">                                                                                         
-                                 <a href="{#{ path('app_timetable_view_person', {'id': program.id }) }#}" class="text-info view" title="Ver registros">
+                                 <a href="{{ path('app_person_program_timetable_list', {'id': person.id }) }}" class="text-info view" title="Ver registros">
                                     <i data-feather="clock" class="feather-sm fill-white"></i>
                                 </a>                                
-                                {% if not is_granted('ROLE_CONSULTANT') %}
+                                {% if now < program.dateend|date('d/m/Y', 'Europe/Madrid') and not is_granted('ROLE_CONSULTANT') %}
                                     <a href="{{ path('app_person_program_edit', {'id': person.id }) }}" class="text-primary edit">
                                         <i data-feather="edit" class="feather-sm fill-white"></i>
                                     </a>  

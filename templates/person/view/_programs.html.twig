@@ -25,19 +25,28 @@
             </tr>
         </thead>
         <tbody>
+            {% set now = "now"|date('d/m/Y', 'Europe/Madrid') %}
+            {% set finished = false %}
             {% if person.programs is defined  and person.programs|length > 0 %}
                 {% for program in person.programs %}
-                    <tr>
-                        <td>{{ program.program.code }}</td>
-                        <td>{{ program.program.name }}</td>
-                        <td>{{ program.program.datestart|date('d/m/Y', 'Europe/Madrid') }}</td>
-                        <td>{{ program.program.dateend|date('d/m/Y', 'Europe/Madrid')  }}</td>
-                        <td>
-                            <div class="action-btn">                                                                                         
-                                <a href="{#{ path('app_timetable_view_person', {'id': program.id }) }#}" class="text-info view" title="Ver registros">
+                    {% if now > program.program.dateend|date('d/m/Y', 'Europe/Madrid') %}
+                        {% set finished = true %}
+                    {% endif %}
+                    {% if finished %}
+                        <tr class="finished">
+                    {% else %}
+                        <tr>
+                    {% endif %}
+                    <td>{{ program.program.code }}</td>
+                    <td>{{ program.program.name }}</td>
+                    <td>{{ program.program.datestart|date('d/m/Y', 'Europe/Madrid') }}</td>
+                    <td>{{ program.program.dateend|date('d/m/Y', 'Europe/Madrid')  }}</td>
+                    <td>
+                        <div class="action-btn">                                                                                         
+                                <a href="{{ path('app_person_program_timetable_list', {'id': program.id }) }}" class="text-info view" title="Ver registros">
                                     <i data-feather="clock" class="feather-sm fill-white"></i>
-                                </a>                                
-                                {% if not is_granted('ROLE_CONSULTANT') %}
+                                </a>  
+                                {% if not finished and not is_granted('ROLE_CONSULTANT') %}
                                     <a href="{{ path('app_person_program_edit', {'id': program.id }) }}" class="text-primary edit">
                                         <i data-feather="edit" class="feather-sm fill-white"></i>
                                     </a>  

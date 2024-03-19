@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-12 text-end d-flex justify-content-md-end justify-content-center">
+        {% if is_granted('ROLE_MANAGER') %}
+            <div class="row button-group">
+                <a href="{{ path('app_person_program_add', {'id': person.id }) }}" title="nuevo">                
+                    <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                        <i data-feather="plus" class="feather-sm fill-white me-2"></i>Asociar a un programa
+                    </button>   
+                </a>                 
+            </div>
+        {% endif %}            
+    </div>
+</div>
+<div class="table-responsive table-responsive-document">
+    <table id="datatable-programs" class="table display dataTable table-bordered table-striped no-wrap">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Comienzo</th>
+                <th>Fin</th>
+                {% if not is_granted('ROLE_CONSULTANT') %}
+                    <th>Acciones</th>
+                {% endif %}                
+            </tr>
+        </thead>
+        <tbody>
+            {% set now = "now"|date("d/m/Y") %}
+            {% set finished = false %}
+            {% if person.programs is defined  and person.programs|length > 0 %}
+                {% for program in person.programs %}
+                    {% if now > program.program.dateend|date('d/m/Y', 'Europe/Madrid') %}
+                        {% set finished = true %}
+                    {% endif %}
+                    {% if finished %}
+                        <tr class="finished">
+                    {% else %}
+                        <tr>
+                    {% endif %}
+                        <td>{{ program.program.code }}</td>
+                        <td>{{ program.program.name }}</td>
+                        <td>{{ program.program.datestart|date('d/m/Y', 'Europe/Madrid') }}</td>
+                        <td>{{ program.program.dateend|date('d/m/Y', 'Europe/Madrid')  }}</td>
+                        <td>
+                            <div class="action-btn">                                                                                         
+                                <a href="{{ path('app_person_program_timetable_list', {'id': program.id }) }}" class="text-info view" title="Ver registros">
+                                    <i data-feather="clock" class="feather-sm fill-white"></i>
+                                </a>
+                                {% if not finished and not is_granted('ROLE_CONSULTANT')%}
+                                    <a href="{{ path('app_person_program_edit', {'id': program.id }) }}" class="text-primary edit">
+                                        <i data-feather="edit" class="feather-sm fill-white"></i>
+                                    </a>  
+                                    <a href="{{ path('app_person_program_remove', {'id': program.id }) }}" class="text-dark delete ms-2">
+                                        <i data-feather="trash-2" class="feather-sm fill-white"></i>
+                                    </a>   
+                                {% endif %}
+                            </div>                                
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">No existen programas asociados a esta persona</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>

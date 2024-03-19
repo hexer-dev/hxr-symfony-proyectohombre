@@ -32,6 +32,9 @@
                     <tr>
                         <th class="border-bottom border-top">Código</th>
                         <th class="border-bottom border-top">Nombre</th>
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') %}
+                            <th class="border-bottom border-top">Sede</th>
+                        {% endif %}
                         <th class="border-bottom border-top">Comienzo</th>
                         <th class="border-bottom border-top">Fin</th>
                         <th class="border-bottom border-top">Acciones</th>
@@ -47,6 +50,9 @@
                             </div>
                         </td>
                         <td>{{ program.name }}</td>
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') %}
+                            <td>{{ (null != program.headquarter) ? program.headquarter : '---' }}</td>
+                        {% endif %}
                         <td>{{ program.datestart|date('d/m/Y', 'Europe/Madrid') }}</td>
                         <td>{{ program.dateend|date('d/m/Y', 'Europe/Madrid')  }}</td>
                         <td>
@@ -67,7 +73,11 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="5">No existen programas para su sede</td>
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') %}
+                            <td colspan="5">No existen programas en su aplicación</td>
+                        {% else %}
+                            <td colspan="5">No existen programas para su sede</td>
+                        {% endif %}                        
                     </tr>
                 {% endif %}
                 </tbody>
