@@ -3,7 +3,6 @@
 {% block title %}Registros de tiempos{% endblock %}
 
 {% block content %}
-{% set now = "now"|date('d/m/Y', 'Europe/Madrid') %}
 
  <div class="row page-titles">
     <div class="col-md-7 col-12 align-self-center">
@@ -16,8 +15,8 @@
     <div class="col-md-5 col-12 align-self-center">
         <div class="d-flex mt-2 justify-content-end">
             <div class="d-flex me-3 ms-2">
-            {% if not personInProgram.hasOpenTimetable and 
-                  now < personInProgram.program.dateend|date('d/m/Y', 'Europe/Madrid') 
+            {% if not personInProgram.hasOpenTimetable 
+                  and personInProgram.program.isActived 
                   and not is_granted('ROLE_CONSULTANT') %}
                 <div class="row button-group">
                     <a href="{{ path('app_person_program_timetable_add', {'id': personInProgram.id }) }}" title="nuevo">                
@@ -54,7 +53,7 @@
                                 <tr>
                                     <td>{{ timetable.dateStart|date('d/m/Y') }}</td>
                                     <td>{{ (null != timetable.dateEnd) ? timetable.dateEnd|date('d/m/Y') : '---' }}</td>
-                                    {% if  now < personInProgram.program.dateend|date('d/m/Y', 'Europe/Madrid') and not is_granted('ROLE_CONSULTANT') %}
+                                    {% if personInProgram.program.isActived  and not is_granted('ROLE_CONSULTANT') %}
                                         <td>
                                             <div class="action-btn">
                                                 {% if isOpen %}

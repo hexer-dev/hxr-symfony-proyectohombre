@@ -29,11 +29,12 @@ class EditController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+            $password = $form->get('password')->getData();
 
-            if (null !== $user->getPassword() && !empty($user->getPassword())) {
+            if (null !== $password && !empty($password)) {
                 $passwordHashed = $hasherPassword->hashPassword(
                     $user,
-                    $user->getPassword()
+                    $password
                 );
 
                 $user->setPassword($passwordHashed);

@@ -166,7 +166,7 @@ class DocumentVoter extends Voter
         if (
             (
                 $this->security->isGranted('ROLE_USER_MANAGER') 
-                || $this->security->isGranted('ROLE_USER_MANAGER')
+                || $this->security->isGranted('ROLE_CONSULTANT')
             )  
             && $sameHeadquarter
         ) {

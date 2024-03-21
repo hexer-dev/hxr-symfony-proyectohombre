@@ -191,4 +191,14 @@ class Program
 
         return $this;
     }
+
+    public function isActived()
+    {
+        $now = new \DateTime('NOW');
+
+        if ($now < $this->getDateEnd()) {
+            return true;
+        }
+        return false;
+    }
 }

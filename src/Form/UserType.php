@@ -62,6 +62,7 @@ class UserType extends AbstractType
                     'label' => 'Repetir Contraseña'
                 ],
                 'invalid_message' => 'Las contraseñas no coinciden.',
+                'mapped' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Guardar'

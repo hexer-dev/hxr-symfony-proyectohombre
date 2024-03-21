@@ -1,6 +1,7 @@
+{% set now = "now"|date('d/m/Y', 'Europe/Madrid') %}
 <div class="row">
     <div class="col-12 text-end d-flex justify-content-md-end justify-content-center">
-        {% if is_granted('ROLE_MANAGER') %}
+        {% if  now < program.dateend|date('d/m/Y', 'Europe/Madrid')  and is_granted('ROLE_MANAGER') %}
             <div class="row button-group">
                 <a href="{{ path('app_program_person_add', {'id': program.id }) }}" title="nuevo">                
                     <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      

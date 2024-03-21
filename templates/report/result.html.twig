@@ -1,0 +1,127 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}Ver Informe{% endblock %}
+
+{% block content %}
+ <div class="row page-titles">
+    <div class="col-md-7 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Ver Infome</h3>        
+    </div>
+</div>
+ <div class="container-fluid">
+    <div class="row">
+            <div class="col-12 text-end d-flex justify-content-md-end justify-content-center">
+                <div class="row button-group">
+                    <a href="{{ path('app_report_admin') }}" title="Generar Informes">                
+                        <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                            <i data-feather="arrow-left" class="feather-sm fill-white me-2"></i>Volver
+                        </button>   
+                    </a>                 
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <div class="table-responsive table-responsive-document">
+                        <table id="datatable-reports" class="table dataTable display table-bordered table-striped no-wrap">
+                            <thead>
+                                <tr>
+                                    <th>Cod. Prg.</th>
+                                    <th>Sede</th>
+                                    <th>Nombre y Apellidos</th>
+                                    <th>NIF</th>
+                                    <th>Sexo</th>
+                                    <th>F.Nacimiento</th>
+                                    <th>Edad</th>
+                                    <th>Nacionalidad</th>
+                                    <th>Dirección</th>
+                                    <th>Teléfono</th>
+                                    <th>Adicción prinicipal</th>
+                                    <th>Tipo</th>
+                                    <th>F.Inicio</th>
+                                    <th>F.Fin</th>
+                                    <th>IRPF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if personinprogram is defined and personinprogram|length > 0%}
+                                    {% for personinprogram in personinprogram %}
+                                        {% set age = (null != personinprogram.person.birthdate) ? date().diff(date(personinprogram.person.birthdate)).y : '---'%}
+                                        {% set totalTimetable = personinprogram.timetables|length - 1 %}
+                                        {% set dateStart = personinprogram.timetables[0].dateStart|date('d/m/Y') %}    
+                                        {% set dateEnd = (personinprogram.timetables[totalTimetable].dateEnd is null) ? '--' : personinprogram.timetables[totalTimetable].dateEnd|date('d/m/Y') %}
+                                        <tr>
+                                            <td>{{ personinprogram.program.code}}</td>
+                                            <td>{{ personinprogram.program.headquarter.name}}</td>
+                                            <td>{{ personinprogram.person.lastname ~ ', ' ~ personinprogram.person.name }}</td>
+                                            <td>{{ personinprogram.person.nif }}</td>
+                                            <td>{{ (null != personinprogram.person.gender) ? personinprogram.person.gender|trans({}, 'app') : '---' }}</td>
+                                            <td>{{ (null != personinprogram.person.birthdate) ? personinprogram.person.birthdate|date('d/m/Y') : '---' }}</td>
+                                            <td>{{ age }}</td>
+                                            <td>{{ (null != personinprogram.person.nationality) ? personinprogram.person.nationality : '---' }}</td>
+                                            <td>{{ (null != personinprogram.person.address) ? personinprogram.person.address : '---' }}</td>
+                                            <td>{{ (personinprogram.person.phone is null) ? '---' : personinprogram.person.phone }}</td>
+                                            <td>{{ (null != personinprogram.person.drug) ? personinprogram.person.drug.name : '---' }}</td>
+                                            <td>{{ personinprogram.person.type|trans({}, 'app')  }}</td>
+                                            <td>{{ dateStart }}</td>
+                                            <td>{{ dateEnd }}</td>
+                                            <td>{{ (null != personinprogram.reductIrpf and personinprogram.reductIrpf) ? 'Sí' : 'No'}}</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                {% else %}
+                                    <tr><td colspan="15">No existen registros a mostrar con dichos filtros</td></tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_javascripts %}
+    {{ parent() }} 
+    <script src="{{ asset('dist/libs/datatables.net/js/buttons.html5.min.js') }}"></script> 
+    <script src="{{ asset('dist/libs/datatables.net/js/buttons.print.min.js') }}"></script> 
+    <script src="{{ asset('dist/libs/datatables.net/js/dataTables.buttons.min.js') }}"></script> 
+
+    {% if personinprogram is defined  and personinprogram|length > 0 %}
+        <script type="text/javascript">
+          jQuery( document ).ready(function () {
+              if (jQuery('#datatable-reports').length > 0 ){                            
+                  jQuery("#datatable-reports").DataTable({
+                      responsive: true,
+                      autoFill: true,
+                      fixedHeader: true,
+                      scrollX: true,
+                      language: {
+                        url: "{{ asset('dist/js/datatables_i18n_es-ES.json') }}"
+                      },
+                     dom: "Bfrtip",
+                     buttons: ["csv", "excel","print"],
+                  });
+                  
+                  var waitForEl = function(selector, callback) {
+                    if (jQuery(selector).length) {
+                            callback();
+                    } else {
+                        setTimeout(function() {
+                        waitForEl(selector, callback);
+                        }, 100);
+                    }
+                  };
+
+                  waitForEl(".dt-buttons > button.dt-button", function() {
+                      jQuery(".dt-buttons > button.dt-button").addClass("btn btn-info mr-1");
+                  });
+              }    
+          });
+        </script>   
+    {% endif %}     
+  {% endblock %}

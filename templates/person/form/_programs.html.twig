@@ -19,20 +19,13 @@
                 <th>Nombre</th>
                 <th>Comienzo</th>
                 <th>Fin</th>
-                {% if not is_granted('ROLE_CONSULTANT') %}
-                    <th>Acciones</th>
-                {% endif %}                
+                <th>Acciones</th>          
             </tr>
         </thead>
         <tbody>
-            {% set now = "now"|date("d/m/Y") %}
-            {% set finished = false %}
             {% if person.programs is defined  and person.programs|length > 0 %}
                 {% for program in person.programs %}
-                    {% if now > program.program.dateend|date('d/m/Y', 'Europe/Madrid') %}
-                        {% set finished = true %}
-                    {% endif %}
-                    {% if finished %}
+                    {% if not program.program.isActived %}
                         <tr class="finished">
                     {% else %}
                         <tr>
@@ -46,7 +39,7 @@
                                 <a href="{{ path('app_person_program_timetable_list', {'id': program.id }) }}" class="text-info view" title="Ver registros">
                                     <i data-feather="clock" class="feather-sm fill-white"></i>
                                 </a>
-                                {% if not finished and not is_granted('ROLE_CONSULTANT')%}
+                                {% if program.program.isActived and not is_granted('ROLE_CONSULTANT')%}
                                     <a href="{{ path('app_person_program_edit', {'id': program.id }) }}" class="text-primary edit">
                                         <i data-feather="edit" class="feather-sm fill-white"></i>
                                     </a>  

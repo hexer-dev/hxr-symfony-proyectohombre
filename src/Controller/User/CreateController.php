@@ -31,9 +31,20 @@ class CreateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
 
+            $password = $form->get('password')->getData();
+
+            if (null === $password || empty($password)) {
+                $this->addFlash('danger', 'Debe insertar una contraseña');
+                
+                return $this->render('user/add.html.twig', [
+                    'entity' => $user,
+                    'form' => $form->createView()
+                ]);
+            }
+
             $passowordHashed = $hasherPassword->hashPassword(
                 $user,
-                $user->getPassword()
+                $password
             );
 
             $user->setPassword($passowordHashed);

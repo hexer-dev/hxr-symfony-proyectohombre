@@ -10,13 +10,15 @@
     <div class="col-md-5 col-12 align-self-center">
         <div class="d-flex mt-2 justify-content-end">
             <div class="d-flex me-3 ms-2">
-                <div class="row button-group">
-                    <a href="{{ path('app_document_add') }}" title="nuevo">                
-                      <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
-                              <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nuevo
-                      </button>   
-                    </a>                 
-                </div>
+                {% if not is_granted("ROLE_CONSULTANT") %}
+                    <div class="row button-group">
+                        <a href="{{ path('app_document_add') }}" title="nuevo">                
+                        <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
+                                <i data-feather="plus" class="feather-sm fill-white me-2"></i>Nuevo
+                        </button>   
+                        </a>                 
+                    </div>
+               {% endif %}
             </div>
         </div>
     </div>
@@ -49,9 +51,11 @@
                             <i data-feather="more-horizontal" class="feather-sm"></i>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="{{ path('app_document_view',{'id': document.id}) }}">Ver</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_document_edit',{'id': document.id}) }}">Editar</a></li>                            
-                            <li><a class="dropdown-item" href="{{ path('app_document_remove',{'id': document.id}) }}">Eliminar</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_document_view',{'id': document.id}) }}">Ver</a></li>
+                                {% if not is_granted("ROLE_CONSULTANT") %}
+                                    <li><a class="dropdown-item" href="{{ path('app_document_edit',{'id': document.id}) }}">Editar</a></li>                            
+                                    <li><a class="dropdown-item" href="{{ path('app_document_remove',{'id': document.id}) }}">Eliminar</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                         </td>

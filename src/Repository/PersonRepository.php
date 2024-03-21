@@ -8,6 +8,7 @@ use App\Entity\PersonInProgram;
 use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Andx;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -55,43 +56,30 @@ class PersonRepository extends ServiceEntityRepository
     }
 
     public function personInHeadquarterWithoutProgram(Headquarter $headquarter, Program $program)
-    {        
-        /*$subquery = $this->getEntityManager()
-            ->getRepository(PersonInProgram::class)
-            ->createQueryBuilder('pp');
-        $subquery
-            ->select('pp.person')
+    {
+        $qb = $this->createQueryBuilder('p');
+        $peopleInProgram = $qb
+            ->select('DISTINCT p.id')
+            ->join('p.programs', 'pp')
             ->andWhere(
-                $subquery->expr()->eq('pp.program', ':program')
-            )                
+                $qb->expr()->eq('p.headquarter', ':headquarter'),
+                $qb->expr()->eq('pp.program', ':program')
+            )
+            ->setParameter('headquarter', $headquarter)
             ->setParameter('program', $program)
-        ;
-        
+            ->getQuery()
+            ->getSingleColumnResult();
+
         $qb = $this->createQueryBuilder('p');
         $qb
             ->andWhere(
-                $qb->expr()->eq('p.headquarter', ':headquarter'),                
-                $qb->expr()->not(
-                    $qb->expr()->exists(
-                        $subquery->getDQL()
-                    )
-                )
+                $qb->expr()->eq('p.headquarter', ':headquarter'),
+                $qb->expr()->notIn('p.id', ':peopleInProgram')
             )
             ->setParameter('headquarter', $headquarter)
+            ->setParameter('peopleInProgram', $peopleInProgram);
 
-            return $qb;
-        ; */       
-
-        $qb = $this->createQueryBuilder('p');
-
-        return $qb
-            ->andWhere(
-                $qb->expr()->andX(
-                    $qb->expr()->eq('p.headquarter', ':headquarter'),
-                )                
-            )
-            ->setParameter('headquarter', $headquarter)
-        ;        
+        return $qb;
     }
 
     //    /**

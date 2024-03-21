@@ -48,14 +48,16 @@
                         </div>
                       </div>                      
                       <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row py-3">
-                            <label class="control-label text-end col-md-4 font-weight-medium">Contraseña:</label>
-                            <div class="col-md-8">
-                              <p class="form-control-static">********</p>
+                        {% if user.headquarter is not null %}
+                          <div class="col-md-6">
+                            <div class="form-group row py-3">
+                              <label class="control-label text-end col-md-4 font-weight-medium">Sede:</label>
+                              <div class="col-md-8">
+                                <p class="form-control-static">{{ user.headquarter }}</p>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        {% endif %}                        
                         <div class="col-md-6">
                           <div class="form-group row py-3">
                             <label class="control-label text-end col-md-4 font-weight-medium">Email:</label>

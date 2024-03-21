@@ -80,11 +80,13 @@
                           <div class="col-md-6">
                             <div class="row">
                               <div class="col-md-offset-3 col-md-9">
-                                <a href="{{ path('app_document_edit', {'id': document.id }) }}">
-                                  <button type="button" class="btn btn-info">
-                                    <i class="feather-sm" data-feather="edit-2"></i> Editar
-                                  </button>
-                                </a>
+                                {% if not is_granted("ROLE_CONSULTANT") %}
+                                  <a href="{{ path('app_document_edit', {'id': document.id }) }}">
+                                    <button type="button" class="btn btn-info">
+                                      <i class="feather-sm" data-feather="edit-2"></i> Editar
+                                    </button>
+                                  </a>
+                                {% endif %}
                                 <a href="{{ path('app_document_list') }}">
                                   <button type="button" class="btn btn-dark">
                                     <i class="feather-sm" data-feather="arrow-left"></i> Volver

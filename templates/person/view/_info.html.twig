@@ -3,6 +3,14 @@
 
         <div class="col-md-6">
             <div class="form-group row py-3">
+                <label class="control-label text-end col-md-4 font-weight-medium">Tipo:</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{ person.type|trans({}, 'app')  }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row py-3">
                 <label class="control-label text-end col-md-4 font-weight-medium">Nif:</label>
                 <div class="col-md-8">
                     <p class="form-control-static">{{ person.nif }}</p>
@@ -45,7 +53,31 @@
             <div class="form-group row py-3">
                 <label class="control-label text-end col-md-4 font-weight-medium">Género:</label>
                 <div class="col-md-8">
-                    <p class="form-control-static">{{ person.gender }}</p>
+                    <p class="form-control-static">{{ (null != person.gender) ? person.gender|trans({}, 'app') : '---' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row py-3">
+                <label class="control-label text-end col-md-4 font-weight-medium">Nacionalidad:</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{ (null != person.nationality) ? person.nationality : '---' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row py-3">
+                <label class="control-label text-end col-md-4 font-weight-medium">Adicción Principal:</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{ (null != person.drug) ? person.drug.name : '---' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row py-3">
+                <label class="control-label text-end col-md-4 font-weight-medium">Sin techo:</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{ (null != person.homeless and person.homeless) ? 'Sí' : 'No' }}</p>
                 </div>
             </div>
         </div>
@@ -53,10 +85,25 @@
             <div class="form-group row py-3">
                 <label class="control-label text-end col-md-2 font-weight-medium">Dirección:</label>
                 <div class="col-md-10">
-                    <p class="form-control-static">{{ person.address }}</p>
+                    <p class="form-control-static">{{ (null != person.address) ? person.address : '---' }}</p>
                 </div>
             </div>
         </div>
-
+        <div class="col-md-6">
+            <div class="form-group row py-3">
+                <label class="control-label text-end col-md-4 font-weight-medium">Pesona de contacto:</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{ (null != person.contactName) ? person.contactName : '---' }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row py-3">
+                <label class="control-label text-end col-md-4 font-weight-medium">Telfn de contacto:</label>
+                <div class="col-md-8">
+                    <p class="form-control-static">{{ (null != person.contactPhone) ? person.contactPhone : '---' }}</p>
+                </div>
+            </div>
+        </div>
     </div>                  
 </div>                  

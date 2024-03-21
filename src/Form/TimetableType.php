@@ -28,7 +28,8 @@ class TimetableType extends AbstractType
                     'html5' => true,
                     'required' => true,
                     'attr' => [
-                        'max' => $currentDate->format('Y-m-d')
+                        'max' => $currentDate->format('Y-m-d'),
+                        'min' => $entity->getDateStart()->format('Y-m-d')
                     ]
                 ]);
         } else {
