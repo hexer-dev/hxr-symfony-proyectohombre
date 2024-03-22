@@ -18,6 +18,8 @@ class ProgramType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $currentDate = new \DateTime();
+
         $builder
             ->add('code', TextType::class, [
                 'label' => 'Código',
@@ -37,12 +39,18 @@ class ProgramType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => true,
                 'required' => true,
+                'attr' => [
+                    'max' => $currentDate->format('Y-m-d')
+                ]
             ])
             ->add('date_end', DateType::class, [
                 'label' => 'Fecha Fin',
                 'widget' => 'single_text',
                 'html5' => true,
                 'required' => true,
+                'attr' => [
+                    'min' => $currentDate->format('Y-m-d')
+                ]
             ])
             ->add('headquarter', EntityType::class, [
                 'class' => Headquarter::class,

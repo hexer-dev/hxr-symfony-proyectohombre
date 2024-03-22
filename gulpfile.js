@@ -6,8 +6,8 @@ const gulp = require("gulp"),
   sass = require('gulp-sass')(require('sass'));
   npmDist = require('gulp-npm-dist');
 
-const sassFiles = "scss/*.scss",
-  cssDest = "dist/css/";
+const sassFiles = "assets/scss/*.scss",
+  cssDest = "assets/dist/css/";
 
 //compile scss into css
 function style() {
@@ -20,7 +20,7 @@ function style() {
 //This is for the minify css
 async function minifycss() {
   return gulp
-    .src(["dist/css/*.css", "!dist/css/**/*.min.css"])
+    .src(["assets/dist/css/*.css", "!assets/dist/css/**/*.min.css"])
     .pipe(
       rename({
         suffix: ".min",
@@ -54,12 +54,12 @@ async function copy() {
     .src(npmDist(), {
       base: "./node_modules",
     })
-    .pipe(gulp.dest("dist/libs"));
+    .pipe(gulp.dest("assets/dist/libs"));
 }
 
 async function watch() {
-  gulp.watch(["scss/**/*.scss"], style);
-  gulp.watch(["dist/css/style.css"], minifycss);
+  gulp.watch(["assets/scss/**/*.scss"], style);
+  gulp.watch(["assets/dist/css/style.css"], minifycss);
   // gulp.watch(["dist/js/**/*.js", "!dist/js/**/*.min.js"], minifyjs);
 }
 

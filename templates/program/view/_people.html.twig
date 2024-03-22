@@ -1,7 +1,6 @@
-{% set now = "now"|date('d/m/Y', 'Europe/Madrid') %}
 <div class="row">
     <div class="col-12 text-end d-flex justify-content-md-end justify-content-center">
-        {% if  now < program.dateend|date('d/m/Y', 'Europe/Madrid')  and is_granted('ROLE_MANAGER') %}
+        {% if  program.isActived  and is_granted('ROLE_MANAGER') %}
             <div class="row button-group">
                 <a href="{{ path('app_program_person_add', {'id': program.id }) }}" title="nuevo">                
                     <button type="button" class="justify-content-center w-100 btn btn-rounded btn-info d-flex align-items-center">                      
@@ -24,7 +23,6 @@
             </tr>
         </thead>
         <tbody>
-            {% set now = "now"|date('d/m/Y', 'Europe/Madrid') %}
             {% if program.people is defined  and program.people|length > 0 %}
                 {% for person in program.people %}
                     <tr>
@@ -37,7 +35,7 @@
                                  <a href="{{ path('app_person_program_timetable_list', {'id': person.id }) }}" class="text-info view" title="Ver registros">
                                     <i data-feather="clock" class="feather-sm fill-white"></i>
                                 </a>                                
-                                {% if now < program.dateend|date('d/m/Y', 'Europe/Madrid') and not is_granted('ROLE_CONSULTANT') %}
+                                {% if program.isActived and not is_granted('ROLE_CONSULTANT') %}
                                     <a href="{{ path('app_person_program_edit', {'id': person.id }) }}" class="text-primary edit">
                                         <i data-feather="edit" class="feather-sm fill-white"></i>
                                     </a>  

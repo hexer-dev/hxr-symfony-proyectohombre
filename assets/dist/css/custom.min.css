@@ -1,3 +1,1 @@
-.no-visible {display: none;}
-label.required::after {content: '*';}
-table.dataTable>tbody>tr.finished>* {background-color: rgb(255 82 63 / 31%);}
+.no-visible{display:none}label.required::after{content:'*'}table.dataTable>tbody>tr.finished>*{background-color:rgb(255 82 63 / 31%)}
