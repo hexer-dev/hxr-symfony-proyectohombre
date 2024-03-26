@@ -28,7 +28,7 @@ class PersonInProgram
     #[ORM\Column(nullable: true)]
     private ?bool $reductIrpf = null;
 
-    #[ORM\ManyToMany(targetEntity: Timetable::class, mappedBy: 'personInProgram')]
+    #[ORM\ManyToMany(targetEntity: Timetable::class, mappedBy: 'personInProgram', cascade: ['persist', 'remove'])]
     private Collection $timetables;
 
     public function __construct()

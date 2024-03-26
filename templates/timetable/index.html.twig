@@ -57,7 +57,7 @@
                                         <td>
                                             <div class="action-btn">
                                                 {% if isOpen %}
-                                                    <a href="{{ path('app_person_program_timetable_edit', { 'id': timetable.id}) }}" class="text-dark delete ms-2" title="marcar salida">
+                                                    <a href="{{ path('app_person_program_timetable_edit', { 'id': timetable.id, 'personInProgram': personInProgram.id }) }}" class="text-dark delete ms-2" title="marcar salida">
                                                         <i data-feather="power" class="feather-sm fill-white"></i>
                                                     </a> 
                                                 {% endif %}

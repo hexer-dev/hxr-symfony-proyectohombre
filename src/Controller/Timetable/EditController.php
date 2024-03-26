@@ -3,6 +3,7 @@
 namespace App\Controller\Timetable;
 
 use App\Entity\PersonInProgram;
+use App\Entity\Program;
 use App\Entity\Timetable;
 use App\Form\TimetableType;
 use App\Repository\TimetableRepository;
@@ -14,20 +15,23 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class EditController extends AbstractController
 {
-    #[Route('/person/program/timetable/edit/{id}', name: 'app_person_program_timetable_edit')]
+    #[Route('/person/program/{personInProgram}/timetable/edit/{id}', name: 'app_person_program_timetable_edit')]
     public function edit(
         Timetable $timetable,
+        PersonInProgram $personInProgram,
         TimetableRepository $repository,
         Request $request
     ): Response
     {
         $currentUser = $this->getUser();
 
-        $personInProgram = $timetable->getPersonInProgram()[0];
-
         $this->denyAccessUnlessGranted(TimetableVoter::EDIT, $timetable);
 
-        $form = $this->createForm(TimetableType::class, $timetable);
+        $program = $personInProgram->getProgram();
+
+        $form = $this->createForm(TimetableType::class, $timetable, [
+            'program' => $program
+        ]);
 
         $form->handleRequest($request);
 

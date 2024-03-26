@@ -58,6 +58,7 @@ class PersonRepository extends ServiceEntityRepository
     public function personInHeadquarterWithoutProgram(Headquarter $headquarter, Program $program)
     {
         $qb = $this->createQueryBuilder('p');
+
         $peopleInProgram = $qb
             ->select('DISTINCT p.id')
             ->join('p.programs', 'pp')
@@ -73,11 +74,17 @@ class PersonRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p');
         $qb
             ->andWhere(
-                $qb->expr()->eq('p.headquarter', ':headquarter'),
-                $qb->expr()->notIn('p.id', ':peopleInProgram')
+                $qb->expr()->eq('p.headquarter', ':headquarter')
             )
-            ->setParameter('headquarter', $headquarter)
-            ->setParameter('peopleInProgram', $peopleInProgram);
+            ->setParameter('headquarter', $headquarter);
+
+        if (null !== $peopleInProgram && count($peopleInProgram) > 0) {
+            $qb
+                ->andWhere(
+                    $qb->expr()->notIn('p.id', ':peopleInProgram')
+                )
+                ->setParameter('peopleInProgram', $peopleInProgram);
+        }
 
         return $qb;
     }

@@ -5,6 +5,7 @@ namespace App\Controller\PersonInProgram;
 use App\Entity\Person;
 use App\Entity\PersonInProgram;
 use App\Entity\Program;
+use App\Entity\Timetable;
 use App\Form\PersonInProgramType;
 use App\Repository\PersonInProgramRepository;
 use App\Security\Voter\PersonVoter;
@@ -53,6 +54,13 @@ class CreateFromProgramController extends AbstractController
             }
 
             try {
+                $timetable = new Timetable();
+                $timetable
+                    ->setCreatedBy($currentUser)
+                    ->setDateStart(new \DateTime('NOW'));
+
+                $personInProgram->addTimetable($timetable);
+
                 $respository->add($personInProgram);
             } catch (\RuntimeException $e) {
                 throw new \RuntimeException("Error al intentar insertar en base de datos");

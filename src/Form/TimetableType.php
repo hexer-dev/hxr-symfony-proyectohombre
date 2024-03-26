@@ -20,6 +20,10 @@ class TimetableType extends AbstractType
 
         $entity = $builder->getData();
 
+        $program = $options['program'];
+
+        dump($program->getDateStart()->format('Y-m-d'));
+
         if (null !== $entity->getDateStart()) {
             $builder
                 ->add('dateEnd',  DateType::class, [
@@ -28,8 +32,8 @@ class TimetableType extends AbstractType
                     'html5' => true,
                     'required' => true,
                     'attr' => [
-                        'max' => $currentDate->format('Y-m-d'),
-                        'min' => $entity->getDateStart()->format('Y-m-d')
+                        'min' => $program->getDateStart()->format('Y-m-d'),
+                        'max' => $program->getDateEnd()->format('Y-m-d')
                     ]
                 ]);
         } else {
@@ -40,7 +44,8 @@ class TimetableType extends AbstractType
                     'html5' => true,
                     'required' => true,
                     'attr' => [
-                        'min' => $currentDate->format('Y-m-d')
+                        'min' => $program->getDateStart()->format('Y-m-d'),
+                        'max' => $program->getDateEnd()->format('Y-m-d')
                     ]
                 ])
             ;
@@ -57,6 +62,7 @@ class TimetableType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Timetable::class,
+            'program' => null
         ]);
     }
 }

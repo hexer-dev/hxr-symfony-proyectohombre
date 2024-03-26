@@ -25,9 +25,13 @@ class CreateController extends AbstractController
         $timetable = new Timetable();
         $timetable->setCreatedBy($currentUser);
 
+        $program = $personInProgram->getProgram();
+
         $this->denyAccessUnlessGranted(TimetableVoter::ADD, $timetable);
 
-        $form = $this->createForm(TimetableType::class, $timetable);
+        $form = $this->createForm(TimetableType::class, $timetable, [
+            'program' => $program
+        ]);
 
         $form->handleRequest($request);
 

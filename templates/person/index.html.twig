@@ -31,6 +31,7 @@
               <thead class="table-light">
                   <tr>
                       <th class="border-bottom border-top">NIF</th>
+                      <th class="border-bottom border-top">Tipo</th>
                       <th class="border-bottom border-top">Nombre</th>
                       <th class="border-bottom border-top">Apellidos</th>
                       <th class="border-bottom border-top">Teléfono</th>
@@ -46,6 +47,7 @@
                               <span class="ms-3 fw-normal">{{ person.nif}}</span>
                           </div>
                       </td>
+                      <td>{{ person.type|trans({}, 'app') }}</td>
                       <td>{{ person.name}}</td>
                       <td>{{ person.lastname}}</td>
                       <td>
@@ -60,8 +62,10 @@
                           </a>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li><a class="dropdown-item" href="{{ path('app_person_view',{'id': person.id}) }}">Ver</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_person_edit',{'id': person.id}) }}">Editar</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_person_remove',{'id': person.id}) }}">Eliminar</a></li>
+                            {% if not is_granted("ROLE_CONSULTANT") %}
+                              <li><a class="dropdown-item" href="{{ path('app_person_edit',{'id': person.id}) }}">Editar</a></li>
+                              <li><a class="dropdown-item" href="{{ path('app_person_remove',{'id': person.id}) }}">Eliminar</a></li>
+                            {% endif %}
                           </ul>
                         </div>
                       </td>
